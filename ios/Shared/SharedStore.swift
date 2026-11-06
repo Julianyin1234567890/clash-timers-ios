@@ -3,9 +3,10 @@ import ClashTimersCore
 
 enum SharedStore {
     static var groupIdentifier: String? {
-        guard let value = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String,
-              value.hasPrefix("group."), !value.contains("$(") else { return nil }
-        return value
+        DocumentStore.sharedGroup(
+            configured: Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String,
+            altStoreGroups: Bundle.main.object(forInfoDictionaryKey: "ALTAppGroups") as? [String] ?? []
+        )
     }
     static var hasWidgetSupport: Bool { groupIdentifier != nil }
     static var groupContainer: URL? {
@@ -33,7 +34,7 @@ enum SharedStoreError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unavailableGroup:
-            return "Shared storage is unavailable. Install the app-only build, or sign the app and widget with the same App Group."
+            return "Shared storage is unavailable. For AltStore Classic, install ClashTimers-AltStore.ipa and keep its widget extension. The app and widget must share an App Group."
         }
     }
 }

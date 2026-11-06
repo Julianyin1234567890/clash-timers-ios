@@ -38,7 +38,7 @@ jobs:
             cmp "$fixture" "ios/Tests/ClashTimersCoreTests/Fixtures/$(basename "$fixture")"
           done
           swift test --package-path ios
-      - name: Build unsigned iPhone IPAs
+      - name: Build iPhone IPAs and verify AltStore widget entitlements
         run: bash ios/scripts/build-device.sh "$RUNNER_TEMP/ipas"
       - name: Test the app on an iPhone simulator
         run: bash ios/scripts/test-simulator.sh "$RUNNER_TEMP/simulator"

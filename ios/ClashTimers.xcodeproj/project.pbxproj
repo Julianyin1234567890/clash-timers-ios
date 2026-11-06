@@ -131,6 +131,22 @@
 			isa = PBXBuildFile;
 			productRef = 60D420AE35F67C1A3C4E9127 /* ClashTimersCore */;
 		};
+		7BCDB2EC502FCD149A635FD6 /* VillageWidgetContent.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0EFD3784DA5C115DAEC3D8D7 /* VillageWidgetContent.swift */;
+		};
+		44A860487AE4ECD7519C6CB5 /* VillageWidgetContent.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 0EFD3784DA5C115DAEC3D8D7 /* VillageWidgetContent.swift */;
+		};
+		FFBAC391CCFDF976CEF26153 /* WidgetPreviewTests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = DD6D86E3CFC6568F71BDD46D /* WidgetPreviewTests.swift */;
+		};
+		1DE59F0AC22AC7C98D121941 /* ClashTimersCore in Frameworks */ = {
+			isa = PBXBuildFile;
+			productRef = 9ED38BA54781974E465E3AFC /* ClashTimersCore */;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,6 +317,18 @@
 			path = Versions.xcconfig;
 			sourceTree = "<group>";
 		};
+		0EFD3784DA5C115DAEC3D8D7 /* VillageWidgetContent.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = VillageWidgetContent.swift;
+			sourceTree = "<group>";
+		};
+		DD6D86E3CFC6568F71BDD46D /* WidgetPreviewTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WidgetPreviewTests.swift;
+			sourceTree = "<group>";
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,7 +359,9 @@
 		88AE2568AA7D1AD371DC9ACB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = ();
+			files = (
+				1DE59F0AC22AC7C98D121941 /* ClashTimersCore in Frameworks */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -342,6 +372,7 @@
 			children = (
 				1065D2CC2607262667A68D1A /* ClashTimersWidget.entitlements */,
 				2C0A352249229ED1930E291E /* ClashTimersWidget.swift */,
+				0EFD3784DA5C115DAEC3D8D7 /* VillageWidgetContent.swift */,
 				40185B8FD8629B1864F2BA9A /* Info.plist */,
 			);
 			path = Widget;
@@ -368,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				45085BED1A909A174547922C /* ClashTimersUITests.swift */,
+				DD6D86E3CFC6568F71BDD46D /* WidgetPreviewTests.swift */,
 			);
 			path = UITests;
 			sourceTree = "<group>";
@@ -447,7 +479,9 @@
 				5CBF99961E126DDEBF2B6984 /* ClashTimers */,
 			);
 			name = ClashTimersUITests;
-			packageProductDependencies = ();
+			packageProductDependencies = (
+				9ED38BA54781974E465E3AFC /* ClashTimersCore */,
+			);
 			productName = ClashTimersUITests;
 			productReference = 88F7217BE84B9124113D6EA7 /* ClashTimersUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -591,6 +625,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58A7523BF9C1EEF8AA0860B9 /* ClashTimersWidget.swift in Sources */,
+				7BCDB2EC502FCD149A635FD6 /* VillageWidgetContent.swift in Sources */,
 				3A3C26DFF80A6389EA485C6B /* SharedStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -600,6 +635,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				16A6D07F63FAB968ECB96F59 /* ClashTimersUITests.swift in Sources */,
+				FFBAC391CCFDF976CEF26153 /* WidgetPreviewTests.swift in Sources */,
+				44A860487AE4ECD7519C6CB5 /* VillageWidgetContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,6 +910,11 @@
 			productName = ClashTimersCore;
 		};
 		E29F9455738361810C718483 /* ClashTimersCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 994D9B7238A3B716F5CA4B13 /* ClashTimersCore */;
+			productName = ClashTimersCore;
+		};
+		9ED38BA54781974E465E3AFC /* ClashTimersCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 994D9B7238A3B716F5CA4B13 /* ClashTimersCore */;
 			productName = ClashTimersCore;

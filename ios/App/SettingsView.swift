@@ -63,7 +63,7 @@ struct SettingsView: View {
                 }
 
                 Section("About") {
-                    LabeledContent("Version", value: "1.0.0")
+                    LabeledContent("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—")
                     Text("Works offline. Village data stays on this device; iOS may include it in your personal backup. No analytics, ads, or background clipboard access.")
                     Text("Unofficial fan project. Not endorsed by Supercell. Clash of Clans names and game data belong to Supercell.")
                         .font(.footnote).foregroundStyle(.secondary)

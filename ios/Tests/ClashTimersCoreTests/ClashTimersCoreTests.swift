@@ -237,6 +237,16 @@ final class ClashTimersCoreTests: XCTestCase {
         XCTAssertEqual(try String(contentsOf: store.fileURL), "broken")
     }
 
+    func testAltStoreGroupResolutionPreservesWidgetAndStandaloneStorage() {
+        let base = "group.com.kuswaa.clashtimers.ios"
+        let mapped = base + ".AB123CD456"
+        let unrelated = "group.com.rileytestut.AltStore.AB123CD456"
+        XCTAssertEqual(DocumentStore.sharedGroup(configured: base, altStoreGroups: [unrelated, mapped]), mapped)
+        XCTAssertEqual(DocumentStore.sharedGroup(configured: base, altStoreGroups: []), base)
+        XCTAssertEqual(DocumentStore.sharedGroup(configured: base, altStoreGroups: [unrelated, base + ".extension"]), base)
+        XCTAssertNil(DocumentStore.sharedGroup(configured: "", altStoreGroups: [mapped]))
+    }
+
     func testInvalidSettingsCannotBeSaved() throws {
         var document = StoredDocument()
         document.settings.boosts.helperWindow = 0

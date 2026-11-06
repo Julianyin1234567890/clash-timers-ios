@@ -28,5 +28,12 @@ for scheme in ClashTimersStandalone ClashTimers; do
     (cd "$stage" && /usr/bin/zip -yqr "$stage/device.ipa" Payload)
     mv "$stage/device.ipa" "$out_dir/$scheme-unsigned.ipa"
     unzip -tq "$out_dir/$scheme-unsigned.ipa"
+    if [[ "$scheme" == 'ClashTimers' ]]; then
+        # AltStore discovers App Groups from Mach-O entitlements, then signs with the user's account.
+        python3 scripts/prepare-altstore.py "$stage/Payload/$scheme.app"
+        (cd "$stage" && /usr/bin/zip -yqr "$stage/altstore.ipa" Payload)
+        mv "$stage/altstore.ipa" "$out_dir/ClashTimers-AltStore.ipa"
+        unzip -tq "$out_dir/ClashTimers-AltStore.ipa"
+    fi
 done
-(cd "$out_dir" && shasum -a 256 ClashTimersStandalone-unsigned.ipa ClashTimers-unsigned.ipa > SHA256SUMS.txt)
+(cd "$out_dir" && shasum -a 256 ClashTimersStandalone-unsigned.ipa ClashTimers-unsigned.ipa ClashTimers-AltStore.ipa > SHA256SUMS.txt)

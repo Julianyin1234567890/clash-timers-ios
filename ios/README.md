@@ -4,7 +4,7 @@ Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports
 
 ## Install from Windows
 
-**The easiest personal install is the app-only IPA.** It runs all timers, boosts, helpers, and finish alerts inside the app. The full build also includes a Home Screen widget and needs a signing profile for its shared App Group.
+**For the app and Home Screen widget, choose `ClashTimers-AltStore.ipa` and install it with AltStore Classic.** Your Windows PC runs AltServer for installation and refresh. The iPhone runs the app and its timers.
 
 ### 1. Get the iPhone build
 
@@ -25,16 +25,28 @@ $owner = gh api user --jq .login
 git push "https://github.com/$owner/clash-timers.git" HEAD:refs/heads/ios-support
 ```
 
-That push starts **Build iPhone app**. It tests the timer engine, builds both device apps, and runs import/potion/persistence tests on an iPhone simulator before uploading the IPAs. Standard runners in public repos are free; private repos use your [GitHub Actions allowance](https://docs.github.com/en/actions/concepts/billing-and-usage).
+That push starts **Build iPhone app**. It tests the timer engine, builds the device apps, verifies the AltStore package’s shared storage entitlements, and runs the simulator checks before uploading the IPAs. Private repositories use your [GitHub Actions allowance](https://docs.github.com/en/actions/concepts/billing-and-usage).
 
-### 2. Sign and install the app-only IPA
+### 2. Install the app and widget with AltStore Classic
+
+1. Follow the [AltStore Classic Windows setup](https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows) to install iTunes, iCloud and AltServer. Connect and trust your iPhone via USB, enable Wi-Fi sync in iTunes, then use **AltServer → Install AltStore**. Trust your developer profile and enable **Developer Mode** on the phone when prompted.
+2. Copy **ClashTimers-AltStore.ipa** to iCloud Drive on Windows. Wait until it appears in **Files → Browse → iCloud Drive** on your iPhone. You can also download and extract the GitHub artifact in Files.
+3. Keep AltServer running and connect over USB or the same Wi-Fi. On your iPhone, open **AltStore Classic → My Apps → +**, pick **ClashTimers-AltStore.ipa**, and **keep the app extensions** if asked. AltStore signs the app and its widget for your Apple account. Each needs an available App ID.
+4. Open **Clash Timers**, import your village as described below, then touch and hold an empty part of your Home Screen. Tap **Edit → Add Widget** (or **+** on iOS 17), find **Clash Timers**, choose a size, and tap **Add Widget**.
+5. With a free Apple account, use **AltStore → My Apps → Refresh All** while connected to AltServer before the seven days expire. See [refreshing apps](https://faq.altstore.io/altstore-classic/your-altstore) and [App ID limits](https://faq.altstore.io/altstore-classic/app-ids).
+
+The AltStore IPA carries an ad hoc signature on both executables requesting the same App Group. During installation, AltStore re-signs them and provides the personal team's group in each bundle's `ALTAppGroups`. The app writes the village to that group and the widget reads it.
+
+### Optional app-only install
+
+Use **ClashTimersStandalone-unsigned.ipa** in AltStore’s file picker to install only the app. It keeps its own local data, so import your village into that version. You can also install it with Sideloadly:
 
 1. Install [Sideloadly for Windows](https://sideloadly.io/) and its listed Apple device drivers. Connect your iPhone by USB, unlock it, and trust the computer.
 2. Open Sideloadly. Select the iPhone and **ClashTimersStandalone-unsigned.ipa**. Use **Apple ID Sideload** and follow the signing prompts on your PC. Nothing needs to be sent to this project or its maintainers.
 3. On the iPhone, trust the developer profile under **Settings → General → VPN & Device Management** if prompted. Enable [Developer Mode](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device) if iOS requests it, then open **Clash Timers**.
 4. With a free Apple account, refresh the app before its seven-day signature expires. Use the same Apple account and bundle ID to retain your data. See the [Sideloadly FAQ](https://sideloadly.io/faq).
 
-An unsigned IPA cannot be installed by just tapping it. The app-only build intentionally has no widget extension or App Group entitlement. **ClashTimers-unsigned.ipa** contains both the app and widget; use a signing setup that provisions both targets and preserves their shared group.
+**ClashTimers-unsigned.ipa** is the input for other signing setups that supply entitlements and profiles for both the app and widget. For AltStore, use the specifically named **ClashTimers-AltStore.ipa**.
 
 ### Optional: signed build with the widget, without a Mac
 
@@ -63,7 +75,7 @@ From `ios/`:
 ```sh
 swift test                         # Portable timer + persistence tests (also works on Linux)
 bash scripts/test-simulator.sh      # Xcode: app import, error recovery, boost/undo, relaunch
-bash scripts/build-device.sh        # Xcode: both unsigned device IPAs in build/artifacts/
+bash scripts/build-device.sh        # Xcode: AltStore IPA and two unsigned IPAs in build/artifacts/
 ```
 
 `Sources/ClashTimersCore` is shared by the app and widget. Its bundled names, durations, and test exports match the Android assets; CI checks these copies for drift. The app is the only writer of the saved document; the widget reads atomic snapshots from the App Group. The standalone target saves the same document in its private Application Support directory.

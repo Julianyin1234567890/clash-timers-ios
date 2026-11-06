@@ -4,6 +4,19 @@ public struct DocumentStore: Sendable {
     public let fileURL: URL
     public init(fileURL: URL) { self.fileURL = fileURL }
 
+    /// AltStore Classic puts the provisioned groups for *each* bundle in ALTAppGroups.
+    /// The app and its widget must resolve the same group after AltStore appends the team ID.
+    public static func sharedGroup(configured: String?, altStoreGroups: [String]) -> String? {
+        guard let base = configured, base.hasPrefix("group."), !base.contains("$(") else { return nil }
+        let prefix = base + "."
+        let remapped = altStoreGroups.first { group in
+            guard group.hasPrefix(prefix) else { return false }
+            let teamID = group.dropFirst(prefix.count).utf8
+            return teamID.count == 10 && teamID.allSatisfy { (65...90).contains($0) || (48...57).contains($0) }
+        }
+        return remapped ?? base
+    }
+
     public func load() throws -> StoredDocument {
         guard FileManager.default.fileExists(atPath: fileURL.path) else { return StoredDocument() }
         let document = try JSONDecoder().decode(StoredDocument.self, from: Data(contentsOf: fileURL))
