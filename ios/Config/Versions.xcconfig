@@ -1,0 +1,10 @@
+// Change the prefix before signing with your own Apple Developer account.
+APP_BUNDLE_IDENTIFIER = com.kuswaa.clashtimers.ios
+APP_GROUP_IDENTIFIER = group.$(APP_BUNDLE_IDENTIFIER)
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+SWIFT_VERSION = 5.0
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+CODE_SIGN_STYLE = Automatic
+// Set DEVELOPMENT_TEAM in Xcode, or pass it to xcodebuild. Never put credentials here.
+DEVELOPMENT_TEAM =

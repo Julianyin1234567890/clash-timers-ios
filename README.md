@@ -2,9 +2,12 @@
 
 [![Latest release](https://img.shields.io/github/v/release/Kuswaa/clash-timers)](https://github.com/Kuswaa/clash-timers/releases/latest)
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
+![iOS 17.0+](https://img.shields.io/badge/iOS-17.0%2B-222222?logo=apple&logoColor=white)
 [![License: MIT](https://img.shields.io/github/license/Kuswaa/clash-timers)](LICENSE)
 
-A home screen widget for Android that shows your Clash of Clans builder, laboratory and pet house timers at a glance. It works fully offline: no account, no server, no ads and no internet permission.
+A home screen timer for Clash of Clans builders, laboratory research, and pets. The original Android app and the native iOS app both calculate your timers offline from a village export.
+
+**iPhone / iPad:** see the [iOS install guide](ios/README.md), including **building and installing from Windows**. The iOS project includes a SwiftUI app, a WidgetKit extension, and local finish notifications. The Android APK does not install on iOS.
 
 <p align="center">
   <img src="docs/screenshots/hero.png" alt="The Clash Timers widget showing builder, lab and pet upgrades with live countdowns" width="420">
@@ -26,7 +29,7 @@ A home screen widget for Android that shows your Clash of Clans builder, laborat
   <img src="docs/screenshots/potion-active.png" alt="The widget with a Builder Potion running: the potion button shows the time left and the builder countdowns are shorter" width="420">
 </p>
 
-## Install
+## Install on Android
 
 Clash Timers isn't on the Play Store, so you install the APK yourself.
 
@@ -36,7 +39,7 @@ Clash Timers isn't on the Play Store, so you install the APK yourself.
 
 Requires Android 8.0 or newer.
 
-## Setup
+## Android setup
 
 1. **Open the app once.** It asks for the name to show on the widget. If you skip this, it shows "Chief".
 2. **Add the widget.** Long-press your home screen, choose **Widgets**, find **Clash Timers** and place it. The default size is 4×5.
@@ -62,7 +65,7 @@ Sync again whenever you start a new upgrade or change something in the game. The
 
 ## Privacy
 
-**The app has no internet permission**, so it can't send anything anywhere. You can check this in the [manifest](app/src/main/AndroidManifest.xml).
+**The Android app has no internet permission**, so it can't send anything anywhere. You can check this in the [manifest](app/src/main/AndroidManifest.xml). The iOS port also processes village data locally and makes no network requests to calculate or sync timers.
 
 - There's no account, analytics, ads or tracking.
 - It only reads the clipboard when you tap Sync.
@@ -103,7 +106,7 @@ The app doesn't connect to the game or change it, and it doesn't automate anythi
 **The app crashed. How do I report it?**
 Open the app, find **Last crash**, tap **Copy** and paste the report into a [bug report](https://github.com/Kuswaa/clash-timers/issues/new/choose).
 
-## Building from source
+## Building Android from source
 
 You'll need:
 

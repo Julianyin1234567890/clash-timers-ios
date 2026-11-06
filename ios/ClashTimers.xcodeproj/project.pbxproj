@@ -1,0 +1,882 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1631A41D9C4566CEE479AC1E /* SharedStore.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = BAD126635A18BE477C18DA58 /* SharedStore.swift */;
+		};
+		16A6D07F63FAB968ECB96F59 /* ClashTimersUITests.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 45085BED1A909A174547922C /* ClashTimersUITests.swift */;
+		};
+		1733B1CF814DCF27C53C7908 /* Assets.xcassets in Resources */ = {
+			isa = PBXBuildFile;
+			fileRef = 33CDEC60A66CFC45C667105D /* Assets.xcassets */;
+		};
+		2C1333F71DC9E8AEF1380326 /* ClashTimersCore in Frameworks */ = {
+			isa = PBXBuildFile;
+			productRef = E29F9455738361810C718483 /* ClashTimersCore */;
+		};
+		2CC14FF002483BD5592D3065 /* ImportVillageView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 624272E17402B3B9BA018E4B /* ImportVillageView.swift */;
+		};
+		3A3C26DFF80A6389EA485C6B /* SharedStore.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = BAD126635A18BE477C18DA58 /* SharedStore.swift */;
+		};
+		4126CBDAE2EFDACAA729EC25 /* DashboardView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2AB269010E1A96444656DF3C /* DashboardView.swift */;
+		};
+		467EB3B28E8ED86A7B3C08AE /* ClashTimersCore in Frameworks */ = {
+			isa = PBXBuildFile;
+			productRef = 990142C0F0FE9167F2D8A670 /* ClashTimersCore */;
+		};
+		51038F704B1AFA54902FC2B7 /* TimerRowView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A46F79189444C06A37A12095 /* TimerRowView.swift */;
+		};
+		58A7523BF9C1EEF8AA0860B9 /* ClashTimersWidget.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2C0A352249229ED1930E291E /* ClashTimersWidget.swift */;
+		};
+		58CEE318C7907E03BB8598D7 /* BoostsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = CF838BBAF737A056A47AC8D4 /* BoostsView.swift */;
+		};
+		6F9042AA80605FB57DF5B64A /* PrivacyInfo.xcprivacy in Resources */ = {
+			isa = PBXBuildFile;
+			fileRef = 6EA6B28E0E4A65D9A8AF435C /* PrivacyInfo.xcprivacy */;
+		};
+		701C4BF882B7F4C3FF093166 /* NotificationScheduler.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */;
+		};
+		7E8E1A3A8FA12F95B6BF8777 /* Assets.xcassets in Resources */ = {
+			isa = PBXBuildFile;
+			fileRef = 33CDEC60A66CFC45C667105D /* Assets.xcassets */;
+		};
+		843F0792CE7ED011E42169A3 /* BoostsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = CF838BBAF737A056A47AC8D4 /* BoostsView.swift */;
+		};
+		9F9A26CEFB02C31CACA38DF7 /* SettingsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 44E827308F537BCFA35D4F9D /* SettingsView.swift */;
+		};
+		A7A458CD78617BC5B723FB1A /* NotificationScheduler.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */;
+		};
+		B4587F25AE26E43F876D631D /* DashboardView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2AB269010E1A96444656DF3C /* DashboardView.swift */;
+		};
+		BE0E6931DFD03B318BBD044C /* ImportVillageView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 624272E17402B3B9BA018E4B /* ImportVillageView.swift */;
+		};
+		C981E8E3B6F62BD14FFEE824 /* AppModel.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 3E74EDF9479F643E6656A097 /* AppModel.swift */;
+		};
+		CF8E68C2CD4B2C5482CA3729 /* PrivacyInfo.xcprivacy in Resources */ = {
+			isa = PBXBuildFile;
+			fileRef = 6EA6B28E0E4A65D9A8AF435C /* PrivacyInfo.xcprivacy */;
+		};
+		D9F4054EE1662E943BA464FE /* ClashTimersApp.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = B89EAE5BD3E9A1144D40DD76 /* ClashTimersApp.swift */;
+		};
+		E0F2A5D853AACFA51287674C /* PrivacyInfo.xcprivacy in Resources */ = {
+			isa = PBXBuildFile;
+			fileRef = 6EA6B28E0E4A65D9A8AF435C /* PrivacyInfo.xcprivacy */;
+		};
+		E319943A81E085D30BB0674F /* ClashTimersWidget.appex in Embed App Extensions */ = {
+			isa = PBXBuildFile;
+			fileRef = 96707ADE040392D6CD72B7CA /* ClashTimersWidget.appex */;
+			settings = {
+				ATTRIBUTES = (
+					RemoveHeadersOnCopy,
+				);
+			};
+		};
+		E3E34EFF0ADD4477510014C1 /* TimerRowView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A46F79189444C06A37A12095 /* TimerRowView.swift */;
+		};
+		EAAF31061C1B8950B0048526 /* SettingsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 44E827308F537BCFA35D4F9D /* SettingsView.swift */;
+		};
+		EC7A60A05C0EDDFCB90065E6 /* ClashTimersApp.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = B89EAE5BD3E9A1144D40DD76 /* ClashTimersApp.swift */;
+		};
+		EDC20D86F8A3AB5EA38151E9 /* AppModel.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 3E74EDF9479F643E6656A097 /* AppModel.swift */;
+		};
+		EF65CFAA908963371DAFC2F6 /* SharedStore.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = BAD126635A18BE477C18DA58 /* SharedStore.swift */;
+		};
+		FCEE4D955F0910100BF71BD6 /* ClashTimersCore in Frameworks */ = {
+			isa = PBXBuildFile;
+			productRef = 60D420AE35F67C1A3C4E9127 /* ClashTimersCore */;
+		};
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2885F31CF7636108A808FAA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0C599BBEEF7F6532F5161DEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 994561B0EAF15E387BFF6619 /* ClashTimers */;
+			remoteInfo = ClashTimers;
+		};
+		905C2F430867DE38C5349C83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0C599BBEEF7F6532F5161DEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 611AC2EBF32BFBCD77FCB149 /* ClashTimersWidget */;
+			remoteInfo = ClashTimersWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		53CBD3433E7ED42541A406C0 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E319943A81E085D30BB0674F /* ClashTimersWidget.appex in Embed App Extensions */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			name = "Embed App Extensions";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1065D2CC2607262667A68D1A /* ClashTimersWidget.entitlements */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.entitlements;
+			path = ClashTimersWidget.entitlements;
+			sourceTree = "<group>";
+		};
+		2AB269010E1A96444656DF3C /* DashboardView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = DashboardView.swift;
+			sourceTree = "<group>";
+		};
+		2C0A352249229ED1930E291E /* ClashTimersWidget.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ClashTimersWidget.swift;
+			sourceTree = "<group>";
+		};
+		33CDEC60A66CFC45C667105D /* Assets.xcassets */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder.assetcatalog;
+			path = Assets.xcassets;
+			sourceTree = "<group>";
+		};
+		3E74EDF9479F643E6656A097 /* AppModel.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AppModel.swift;
+			sourceTree = "<group>";
+		};
+		40185B8FD8629B1864F2BA9A /* Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		44E827308F537BCFA35D4F9D /* SettingsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SettingsView.swift;
+			sourceTree = "<group>";
+		};
+		45085BED1A909A174547922C /* ClashTimersUITests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ClashTimersUITests.swift;
+			sourceTree = "<group>";
+		};
+		5F4D121CE347ECC2E4DD1707 /* ClashTimers.entitlements */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.entitlements;
+			path = ClashTimers.entitlements;
+			sourceTree = "<group>";
+		};
+		624272E17402B3B9BA018E4B /* ImportVillageView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ImportVillageView.swift;
+			sourceTree = "<group>";
+		};
+		64B7E73BFF46806C5FF256FC /* ClashTimersStandalone.app */ = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			path = ClashTimersStandalone.app;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6D2108032E13C5A134CF94BC /* Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		6EA6B28E0E4A65D9A8AF435C /* PrivacyInfo.xcprivacy */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = PrivacyInfo.xcprivacy;
+			sourceTree = "<group>";
+		};
+		7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = NotificationScheduler.swift;
+			sourceTree = "<group>";
+		};
+		88F7217BE84B9124113D6EA7 /* ClashTimersUITests.xctest */ = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = ClashTimersUITests.xctest;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		96707ADE040392D6CD72B7CA /* ClashTimersWidget.appex */ = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.app-extension";
+			includeInIndex = 0;
+			path = ClashTimersWidget.appex;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A46F79189444C06A37A12095 /* TimerRowView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = TimerRowView.swift;
+			sourceTree = "<group>";
+		};
+		B805BABA1B91170212C0AE83 /* ClashTimers.app */ = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			path = ClashTimers.app;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B89EAE5BD3E9A1144D40DD76 /* ClashTimersApp.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ClashTimersApp.swift;
+			sourceTree = "<group>";
+		};
+		BAD126635A18BE477C18DA58 /* SharedStore.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SharedStore.swift;
+			sourceTree = "<group>";
+		};
+		CF838BBAF737A056A47AC8D4 /* BoostsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BoostsView.swift;
+			sourceTree = "<group>";
+		};
+		FD5327C26C0F0392538803A0 /* Versions.xcconfig */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xcconfig;
+			path = Versions.xcconfig;
+			sourceTree = "<group>";
+		};
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6E4BFDE9445842FFF5389D7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				467EB3B28E8ED86A7B3C08AE /* ClashTimersCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C517AA783640489D21291DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C1333F71DC9E8AEF1380326 /* ClashTimersCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8264CFC92F37E1ACB44B8E97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCEE4D955F0910100BF71BD6 /* ClashTimersCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88AE2568AA7D1AD371DC9ACB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1E1B58B7DCAE1A4B3AD23112 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				1065D2CC2607262667A68D1A /* ClashTimersWidget.entitlements */,
+				2C0A352249229ED1930E291E /* ClashTimersWidget.swift */,
+				40185B8FD8629B1864F2BA9A /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		36C45E1590F80CF491C0B666 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3E74EDF9479F643E6656A097 /* AppModel.swift */,
+				CF838BBAF737A056A47AC8D4 /* BoostsView.swift */,
+				5F4D121CE347ECC2E4DD1707 /* ClashTimers.entitlements */,
+				B89EAE5BD3E9A1144D40DD76 /* ClashTimersApp.swift */,
+				2AB269010E1A96444656DF3C /* DashboardView.swift */,
+				624272E17402B3B9BA018E4B /* ImportVillageView.swift */,
+				6D2108032E13C5A134CF94BC /* Info.plist */,
+				7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */,
+				44E827308F537BCFA35D4F9D /* SettingsView.swift */,
+				A46F79189444C06A37A12095 /* TimerRowView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4AE9A508C5A3B4DD67411994 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				45085BED1A909A174547922C /* ClashTimersUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		51B42D6646B4A27B890171D8 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				FD5327C26C0F0392538803A0 /* Versions.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		A8AFE791FB93D14D6799ABA3 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				36C45E1590F80CF491C0B666 /* App */,
+				1E1B58B7DCAE1A4B3AD23112 /* Widget */,
+				F77357C787577A20ABF009B3 /* Shared */,
+				4AE9A508C5A3B4DD67411994 /* UITests */,
+				51B42D6646B4A27B890171D8 /* Config */,
+				F5A99F0A9AAA8B4A6E42D620 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F5A99F0A9AAA8B4A6E42D620 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B805BABA1B91170212C0AE83 /* ClashTimers.app */,
+				64B7E73BFF46806C5FF256FC /* ClashTimersStandalone.app */,
+				96707ADE040392D6CD72B7CA /* ClashTimersWidget.appex */,
+				88F7217BE84B9124113D6EA7 /* ClashTimersUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F77357C787577A20ABF009B3 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				33CDEC60A66CFC45C667105D /* Assets.xcassets */,
+				6EA6B28E0E4A65D9A8AF435C /* PrivacyInfo.xcprivacy */,
+				BAD126635A18BE477C18DA58 /* SharedStore.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		611AC2EBF32BFBCD77FCB149 /* ClashTimersWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D90B407E38959DAA99B209A /* Build configuration list for ClashTimersWidget */;
+			buildPhases = (
+				0C9091D806E64B540605ECD7 /* Sources */,
+				8264CFC92F37E1ACB44B8E97 /* Frameworks */,
+				36D926649B943C265D272198 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = ClashTimersWidget;
+			packageProductDependencies = (
+				60D420AE35F67C1A3C4E9127 /* ClashTimersCore */,
+			);
+			productName = ClashTimersWidget;
+			productReference = 96707ADE040392D6CD72B7CA /* ClashTimersWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		6B2582DA9C34D231B45D29B2 /* ClashTimersUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4634F9F48527B511B2DCD35D /* Build configuration list for ClashTimersUITests */;
+			buildPhases = (
+				673DDAD0CE4109EF811B46F7 /* Sources */,
+				88AE2568AA7D1AD371DC9ACB /* Frameworks */,
+				737721605CFCA9C85B8E9D5B /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+				5CBF99961E126DDEBF2B6984 /* ClashTimers */,
+			);
+			name = ClashTimersUITests;
+			packageProductDependencies = ();
+			productName = ClashTimersUITests;
+			productReference = 88F7217BE84B9124113D6EA7 /* ClashTimersUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		994561B0EAF15E387BFF6619 /* ClashTimers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86A523C85A886F6518430287 /* Build configuration list for ClashTimers */;
+			buildPhases = (
+				A5A498607FB1874C8DB44573 /* Sources */,
+				6E4BFDE9445842FFF5389D7A /* Frameworks */,
+				6712D8B955686C6AB52A62DC /* Resources */,
+				53CBD3433E7ED42541A406C0 /* Embed App Extensions */,
+			);
+			buildRules = ();
+			dependencies = (
+				08F33A86132BC1CFE02324F6 /* ClashTimersWidget */,
+			);
+			name = ClashTimers;
+			packageProductDependencies = (
+				990142C0F0FE9167F2D8A670 /* ClashTimersCore */,
+			);
+			productName = ClashTimers;
+			productReference = B805BABA1B91170212C0AE83 /* ClashTimers.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C0CD2958C71D3A5607B3A794 /* ClashTimersStandalone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9B3025714AE12D6B08C6C34 /* Build configuration list for ClashTimersStandalone */;
+			buildPhases = (
+				92AA005407A1B20BA021E378 /* Sources */,
+				7C517AA783640489D21291DD /* Frameworks */,
+				35125CF8D2F0210DCAE98244 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = ClashTimersStandalone;
+			packageProductDependencies = (
+				E29F9455738361810C718483 /* ClashTimersCore */,
+			);
+			productName = ClashTimersStandalone;
+			productReference = 64B7E73BFF46806C5FF256FC /* ClashTimersStandalone.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0C599BBEEF7F6532F5161DEE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					994561B0EAF15E387BFF6619 /* ClashTimers */ = {
+						CreatedOnToolsVersion = 16.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					C0CD2958C71D3A5607B3A794 /* ClashTimersStandalone */ = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					611AC2EBF32BFBCD77FCB149 /* ClashTimersWidget */ = {
+						CreatedOnToolsVersion = 16.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					6B2582DA9C34D231B45D29B2 /* ClashTimersUITests */ = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 994561B0EAF15E387BFF6619 /* ClashTimers */;
+					};
+				};
+			};
+			buildConfigurationList = DFA94A567349181E6CB8B02C /* Build configuration list for project */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A8AFE791FB93D14D6799ABA3 /* Project */;
+			packageReferences = (
+				994D9B7238A3B716F5CA4B13 /* ClashTimersCore */,
+			);
+			productRefGroup = F5A99F0A9AAA8B4A6E42D620 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				994561B0EAF15E387BFF6619 /* ClashTimers */,
+				C0CD2958C71D3A5607B3A794 /* ClashTimersStandalone */,
+				611AC2EBF32BFBCD77FCB149 /* ClashTimersWidget */,
+				6B2582DA9C34D231B45D29B2 /* ClashTimersUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		35125CF8D2F0210DCAE98244 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF8E68C2CD4B2C5482CA3729 /* PrivacyInfo.xcprivacy in Resources */,
+				7E8E1A3A8FA12F95B6BF8777 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36D926649B943C265D272198 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0F2A5D853AACFA51287674C /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6712D8B955686C6AB52A62DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F9042AA80605FB57DF5B64A /* PrivacyInfo.xcprivacy in Resources */,
+				1733B1CF814DCF27C53C7908 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		737721605CFCA9C85B8E9D5B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0C9091D806E64B540605ECD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58A7523BF9C1EEF8AA0860B9 /* ClashTimersWidget.swift in Sources */,
+				3A3C26DFF80A6389EA485C6B /* SharedStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		673DDAD0CE4109EF811B46F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16A6D07F63FAB968ECB96F59 /* ClashTimersUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92AA005407A1B20BA021E378 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C981E8E3B6F62BD14FFEE824 /* AppModel.swift in Sources */,
+				843F0792CE7ED011E42169A3 /* BoostsView.swift in Sources */,
+				EC7A60A05C0EDDFCB90065E6 /* ClashTimersApp.swift in Sources */,
+				B4587F25AE26E43F876D631D /* DashboardView.swift in Sources */,
+				BE0E6931DFD03B318BBD044C /* ImportVillageView.swift in Sources */,
+				A7A458CD78617BC5B723FB1A /* NotificationScheduler.swift in Sources */,
+				9F9A26CEFB02C31CACA38DF7 /* SettingsView.swift in Sources */,
+				51038F704B1AFA54902FC2B7 /* TimerRowView.swift in Sources */,
+				EF65CFAA908963371DAFC2F6 /* SharedStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5A498607FB1874C8DB44573 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC20D86F8A3AB5EA38151E9 /* AppModel.swift in Sources */,
+				58CEE318C7907E03BB8598D7 /* BoostsView.swift in Sources */,
+				D9F4054EE1662E943BA464FE /* ClashTimersApp.swift in Sources */,
+				4126CBDAE2EFDACAA729EC25 /* DashboardView.swift in Sources */,
+				2CC14FF002483BD5592D3065 /* ImportVillageView.swift in Sources */,
+				701C4BF882B7F4C3FF093166 /* NotificationScheduler.swift in Sources */,
+				EAAF31061C1B8950B0048526 /* SettingsView.swift in Sources */,
+				E3E34EFF0ADD4477510014C1 /* TimerRowView.swift in Sources */,
+				1631A41D9C4566CEE479AC1E /* SharedStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		08F33A86132BC1CFE02324F6 /* ClashTimersWidget */ = {
+			isa = PBXTargetDependency;
+			target = 611AC2EBF32BFBCD77FCB149 /* ClashTimersWidget */;
+			targetProxy = 905C2F430867DE38C5349C83 /* PBXContainerItemProxy */;
+		};
+		5CBF99961E126DDEBF2B6984 /* ClashTimers */ = {
+			isa = PBXTargetDependency;
+			target = 994561B0EAF15E387BFF6619 /* ClashTimers */;
+			targetProxy = 2885F31CF7636108A808FAA4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		082525CA633B5C57B61150B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD5327C26C0F0392538803A0 /* Versions.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_LANGUAGE = en;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_TESTABILITY = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		29F48083AA02AB8B31F1B123 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_FILE = App/Info.plist;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).standalone";
+				APP_GROUP_IDENTIFIER = "";
+			};
+			name = Release;
+		};
+		377DF96BA59978C953C767AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				INFOPLIST_FILE = Widget/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).widget";
+				CODE_SIGN_ENTITLEMENTS = Widget/ClashTimersWidget.entitlements;
+				PROVISIONING_PROFILE_SPECIFIER = "$(WIDGET_PROFILE_NAME)";
+				SKIP_INSTALL = YES;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+			};
+			name = Debug;
+		};
+		4E3AB04AAC474697A726B4A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_FILE = App/Info.plist;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).standalone";
+				APP_GROUP_IDENTIFIER = "";
+			};
+			name = Debug;
+		};
+		5E710CC204D3E76B2419E26C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).uitests";
+				TEST_TARGET_NAME = ClashTimers;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		6666BC1023856CAF8EEA7BA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				INFOPLIST_FILE = Widget/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).widget";
+				CODE_SIGN_ENTITLEMENTS = Widget/ClashTimersWidget.entitlements;
+				PROVISIONING_PROFILE_SPECIFIER = "$(WIDGET_PROFILE_NAME)";
+				SKIP_INSTALL = YES;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+			};
+			name = Release;
+		};
+		66F8B3E5AF55838972A761EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_FILE = App/Info.plist;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
+				CODE_SIGN_ENTITLEMENTS = App/ClashTimers.entitlements;
+				PROVISIONING_PROFILE_SPECIFIER = "$(APP_PROFILE_NAME)";
+			};
+			name = Release;
+		};
+		8898E4F823E25377DF7F840E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_FILE = App/Info.plist;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
+				CODE_SIGN_ENTITLEMENTS = App/ClashTimers.entitlements;
+				PROVISIONING_PROFILE_SPECIFIER = "$(APP_PROFILE_NAME)";
+			};
+			name = Debug;
+		};
+		945C67642E75D198165FA53C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).uitests";
+				TEST_TARGET_NAME = ClashTimers;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		EB592AD2D7DFAC8ED378521A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD5327C26C0F0392538803A0 /* Versions.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_LANGUAGE = en;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_COMPILATION_MODE = singlefile;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4634F9F48527B511B2DCD35D /* Build configuration list for ClashTimersUITests */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				945C67642E75D198165FA53C /* Debug */,
+				5E710CC204D3E76B2419E26C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D90B407E38959DAA99B209A /* Build configuration list for ClashTimersWidget */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				377DF96BA59978C953C767AA /* Debug */,
+				6666BC1023856CAF8EEA7BA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86A523C85A886F6518430287 /* Build configuration list for ClashTimers */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8898E4F823E25377DF7F840E /* Debug */,
+				66F8B3E5AF55838972A761EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9B3025714AE12D6B08C6C34 /* Build configuration list for ClashTimersStandalone */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E3AB04AAC474697A726B4A0 /* Debug */,
+				29F48083AA02AB8B31F1B123 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFA94A567349181E6CB8B02C /* Build configuration list for project */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB592AD2D7DFAC8ED378521A /* Debug */,
+				082525CA633B5C57B61150B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		994D9B7238A3B716F5CA4B13 /* ClashTimersCore */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		60D420AE35F67C1A3C4E9127 /* ClashTimersCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 994D9B7238A3B716F5CA4B13 /* ClashTimersCore */;
+			productName = ClashTimersCore;
+		};
+		990142C0F0FE9167F2D8A670 /* ClashTimersCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 994D9B7238A3B716F5CA4B13 /* ClashTimersCore */;
+			productName = ClashTimersCore;
+		};
+		E29F9455738361810C718483 /* ClashTimersCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 994D9B7238A3B716F5CA4B13 /* ClashTimersCore */;
+			productName = ClashTimersCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 0C599BBEEF7F6532F5161DEE /* Project object */;
+}

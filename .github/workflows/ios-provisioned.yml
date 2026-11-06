@@ -1,0 +1,31 @@
+name: Sign iPhone app with widget
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  sign:
+    # Profiles embedded in a device IPA contain registered device IDs; keep this artifact private.
+    if: github.event.repository.private == true
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test timer logic
+        run: swift test --package-path ios
+      - name: Build for registered devices
+        run: python3 ios/scripts/build-provisioned.py "$RUNNER_TEMP/signed"
+        env:
+          IOS_CERTIFICATE_P12: ${{ secrets.IOS_CERTIFICATE_P12 }}
+          IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+          IOS_APP_PROFILE: ${{ secrets.IOS_APP_PROFILE }}
+          IOS_WIDGET_PROFILE: ${{ secrets.IOS_WIDGET_PROFILE }}
+      - name: Upload provisioned iPhone app
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClashTimers-provisioned
+          path: ${{ runner.temp }}/signed/ClashTimers-provisioned.ipa
+          if-no-files-found: error
+          retention-days: 1

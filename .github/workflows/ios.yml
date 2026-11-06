@@ -1,0 +1,59 @@
+name: Build iPhone app
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, ios-support]
+    paths: ['ios/**', '.github/workflows/ios.yml', 'app/src/main/assets/*.json', 'app/src/test/resources/fixtures/**']
+  pull_request:
+    paths: ['ios/**', '.github/workflows/ios.yml', 'app/src/main/assets/*.json', 'app/src/test/resources/fixtures/**']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select an installed stable Xcode
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, re
+          items = [(tuple(map(int, m[1].split('.'))), p) for p in Path('/Applications').glob('Xcode_*.app')
+                   if (m := re.fullmatch(r'Xcode_(\d+(?:\.\d+)*)\.app', p.name))]
+          if items:
+              with open(os.environ['GITHUB_ENV'], 'a') as env:
+                  print('DEVELOPER_DIR=' + str(max(items)[1] / 'Contents/Developer'), file=env)
+          PY
+      - name: Check bundled game data and run timer tests
+        run: |
+          xcodebuild -version
+          cmp app/src/main/assets/names.json ios/Sources/ClashTimersCore/Resources/names.json
+          cmp app/src/main/assets/upgrade_times.json ios/Sources/ClashTimersCore/Resources/upgrade_times.json
+          for fixture in app/src/test/resources/fixtures/*.json; do
+            cmp "$fixture" "ios/Tests/ClashTimersCoreTests/Fixtures/$(basename "$fixture")"
+          done
+          swift test --package-path ios
+      - name: Build unsigned iPhone IPAs
+        run: bash ios/scripts/build-device.sh "$RUNNER_TEMP/ipas"
+      - name: Test the app on an iPhone simulator
+        run: bash ios/scripts/test-simulator.sh "$RUNNER_TEMP/simulator"
+      - name: Upload iPhone apps
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClashTimers-iPhone
+          path: ${{ runner.temp }}/ipas/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload simulator test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: iPhone-simulator-tests
+          path: ${{ runner.temp }}/simulator/*.xcresult
+          if-no-files-found: ignore
+          retention-days: 7
