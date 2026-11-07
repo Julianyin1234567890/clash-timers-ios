@@ -4,6 +4,8 @@ Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports
 
 ## Install from Windows
 
+**Version 1.0.2 restores the original visual design and interactive widget controls.** The artwork and font come from the Android sources. iOS chooses the fixed widget dimensions, so compact sizes show fewer rows. Choose the large widget and the Home Screen’s Light or Dark appearance for the original colour palette.
+
 **For the app and Home Screen widget, choose `ClashTimers-AltStore.ipa` and install it with AltStore Classic.** Your Windows PC runs AltServer for installation and refresh. The iPhone runs the app and its timers.
 
 ### 1. Get the iPhone build
@@ -62,7 +64,7 @@ If you have Apple development or ad hoc device profiles, the **Sign iPhone app w
 2. In Clash Timers, tap **Import your village** (or **Sync**), **Paste**, then **Import**. The app only accepts a complete village export. An invalid or older export for the same tag leaves your saved timers intact.
 3. Record potions or a Builder Bite under **Potions & snacks** after using them in the game. Record repeated uses to queue them; **Undo** removes a queued boost or stops a running one without losing time already saved. The person button on an upgrade links or unlinks its helper.
 4. Enable **Settings → Finish alerts** if desired. Alerts are scheduled locally and tapping one opens Clash Timers. A fresh sync or a changed prediction replaces obsolete alerts.
-5. With the full build, add **Clash Timers** from your Home Screen widget gallery. The small widget shows the next finish; medium and large show additional jobs. Tap **Sync** or **Potions & snacks** to open those controls in the app. iOS draws the countdown; [WidgetKit controls the timing of layout refreshes](https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date).
+5. With the full build, add **Clash Timers** from your Home Screen widget gallery. The small widget shows the next finish, the medium widget shows one row per category, and the large widget shows the detailed builder, lab and pet sections. The large widget keeps the original brown panel, green progress rows, game icons and Lilita One font. Its potion buttons record boosts, the minus buttons undo them, and the green plus buttons link helpers directly. **Sync** opens the paste screen. iOS draws the countdown; [WidgetKit controls the timing of layout refreshes](https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date).
 
 The game export is a snapshot. Copy a new one after changing upgrades in-game. Helper finish times assume future helper sessions are activated; the next export corrects the estimate. Importing a different player tag starts a separate calculation and discards the previous village’s boosts and links. The app tracks one village at a time.
 
@@ -78,6 +80,6 @@ bash scripts/test-simulator.sh      # Xcode: app import, error recovery, boost/u
 bash scripts/build-device.sh        # Xcode: AltStore IPA and two unsigned IPAs in build/artifacts/
 ```
 
-`Sources/ClashTimersCore` is shared by the app and widget. Its bundled names, durations, and test exports match the Android assets; CI checks these copies for drift. The app is the only writer of the saved document; the widget reads atomic snapshots from the App Group. The standalone target saves the same document in its private Application Support directory.
+`Sources/ClashTimersCore` is shared by the app and widget. Its bundled names, durations, and test exports match the Android assets; CI checks these copies for drift. The app and interactive widget update the saved document through one locked read-modify-write operation and read atomic snapshots from the App Group. The standalone target saves the same document in its private Application Support directory.
 
 Code is covered by the repository [LICENSE](../LICENSE). Game data and names have separate [notices](../NOTICE). This is unofficial fan content and is not endorsed by Supercell.

@@ -47,3 +47,10 @@ LIBRARIES
 
 The app is built with AndroidX, Jetpack Compose, Kotlin and kotlinx.serialization,
 which are licensed under the Apache License, Version 2.0.
+
+
+IOS ARTWORK AND FONT COPIES
+The iOS port includes lossless PNG conversions of the original icons in
+Resources/Artwork and the original lilita_one.ttf font. Their ownership
+and licence terms are the same as the originals described above.
+The full SIL Open Font License is included in Resources/LilitaOne-OFL.txt.

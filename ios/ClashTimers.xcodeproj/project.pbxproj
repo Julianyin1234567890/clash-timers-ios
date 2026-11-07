@@ -147,6 +147,74 @@
 			isa = PBXBuildFile;
 			productRef = 9ED38BA54781974E465E3AFC /* ClashTimersCore */;
 		};
+		C6157E61FD3C2D2A3E7FABB7 /* OriginalTheme.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 306FC99D56C42396A875FAB6 /* OriginalTheme.swift */;
+		};
+		B832963C4970CED6AB1BEB9E /* VillagePanel.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 27A78BD0F5927FCE73FE0BC4 /* VillagePanel.swift */;
+		};
+		DDB29106CB81AF4E2D19CD9D /* WidgetActions.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2F50C7206C162FC7B13005D6 /* WidgetActions.swift */;
+		};
+		E7407872DE88DCB97D335528 /* OriginalTheme.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 306FC99D56C42396A875FAB6 /* OriginalTheme.swift */;
+		};
+		D1E9BBECDFF633EF446AE269 /* VillagePanel.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 27A78BD0F5927FCE73FE0BC4 /* VillagePanel.swift */;
+		};
+		1DE79567BFCC2A28C07081AE /* WidgetActions.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2F50C7206C162FC7B13005D6 /* WidgetActions.swift */;
+		};
+		AD307E8A3FA3F9335F7D6744 /* OriginalTheme.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 306FC99D56C42396A875FAB6 /* OriginalTheme.swift */;
+		};
+		97642D15E8CFF887CB4D7C3D /* VillagePanel.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 27A78BD0F5927FCE73FE0BC4 /* VillagePanel.swift */;
+		};
+		3A987E0A1BDBBEF5005FABE7 /* WidgetActions.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2F50C7206C162FC7B13005D6 /* WidgetActions.swift */;
+		};
+		63B784DCBFC69F2CB45B8ABA /* TimerRowView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A46F79189444C06A37A12095 /* TimerRowView.swift */;
+		};
+		B3B541E2964FB479C8F1AF72 /* NotificationScheduler.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */;
+		};
+		FF9D133CFA93646FD28E60F5 /* OriginalTheme.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 306FC99D56C42396A875FAB6 /* OriginalTheme.swift */;
+		};
+		C8DFB77E03C155181861C37A /* VillagePanel.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 27A78BD0F5927FCE73FE0BC4 /* VillagePanel.swift */;
+		};
+		0923E5E3B9707F7294D305DD /* WidgetActions.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 2F50C7206C162FC7B13005D6 /* WidgetActions.swift */;
+		};
+		EDC32E44FD1299E0FE8B3367 /* TimerRowView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A46F79189444C06A37A12095 /* TimerRowView.swift */;
+		};
+		F0E11B09A9464130D3419F76 /* SharedStore.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = BAD126635A18BE477C18DA58 /* SharedStore.swift */;
+		};
+		F389C5B9D9CD1CC3397A6BCE /* NotificationScheduler.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = 7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -329,6 +397,24 @@
 			path = WidgetPreviewTests.swift;
 			sourceTree = "<group>";
 		};
+		306FC99D56C42396A875FAB6 /* OriginalTheme.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = OriginalTheme.swift;
+			sourceTree = "<group>";
+		};
+		27A78BD0F5927FCE73FE0BC4 /* VillagePanel.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = VillagePanel.swift;
+			sourceTree = "<group>";
+		};
+		2F50C7206C162FC7B13005D6 /* WidgetActions.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WidgetActions.swift;
+			sourceTree = "<group>";
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +524,9 @@
 		F77357C787577A20ABF009B3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2F50C7206C162FC7B13005D6 /* WidgetActions.swift */,
+				27A78BD0F5927FCE73FE0BC4 /* VillagePanel.swift */,
+				306FC99D56C42396A875FAB6 /* OriginalTheme.swift */,
 				33CDEC60A66CFC45C667105D /* Assets.xcassets */,
 				6EA6B28E0E4A65D9A8AF435C /* PrivacyInfo.xcprivacy */,
 				BAD126635A18BE477C18DA58 /* SharedStore.swift */,
@@ -624,6 +713,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B541E2964FB479C8F1AF72 /* NotificationScheduler.swift in Sources */,
+				63B784DCBFC69F2CB45B8ABA /* TimerRowView.swift in Sources */,
+				3A987E0A1BDBBEF5005FABE7 /* WidgetActions.swift in Sources */,
+				97642D15E8CFF887CB4D7C3D /* VillagePanel.swift in Sources */,
+				AD307E8A3FA3F9335F7D6744 /* OriginalTheme.swift in Sources */,
 				58A7523BF9C1EEF8AA0860B9 /* ClashTimersWidget.swift in Sources */,
 				7BCDB2EC502FCD149A635FD6 /* VillageWidgetContent.swift in Sources */,
 				3A3C26DFF80A6389EA485C6B /* SharedStore.swift in Sources */,
@@ -634,6 +728,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F389C5B9D9CD1CC3397A6BCE /* NotificationScheduler.swift in Sources */,
+				F0E11B09A9464130D3419F76 /* SharedStore.swift in Sources */,
+				EDC32E44FD1299E0FE8B3367 /* TimerRowView.swift in Sources */,
+				0923E5E3B9707F7294D305DD /* WidgetActions.swift in Sources */,
+				C8DFB77E03C155181861C37A /* VillagePanel.swift in Sources */,
+				FF9D133CFA93646FD28E60F5 /* OriginalTheme.swift in Sources */,
 				16A6D07F63FAB968ECB96F59 /* ClashTimersUITests.swift in Sources */,
 				FFBAC391CCFDF976CEF26153 /* WidgetPreviewTests.swift in Sources */,
 				44A860487AE4ECD7519C6CB5 /* VillageWidgetContent.swift in Sources */,
@@ -644,6 +744,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DE79567BFCC2A28C07081AE /* WidgetActions.swift in Sources */,
+				D1E9BBECDFF633EF446AE269 /* VillagePanel.swift in Sources */,
+				E7407872DE88DCB97D335528 /* OriginalTheme.swift in Sources */,
 				C981E8E3B6F62BD14FFEE824 /* AppModel.swift in Sources */,
 				843F0792CE7ED011E42169A3 /* BoostsView.swift in Sources */,
 				EC7A60A05C0EDDFCB90065E6 /* ClashTimersApp.swift in Sources */,
@@ -660,6 +763,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDB29106CB81AF4E2D19CD9D /* WidgetActions.swift in Sources */,
+				B832963C4970CED6AB1BEB9E /* VillagePanel.swift in Sources */,
+				C6157E61FD3C2D2A3E7FABB7 /* OriginalTheme.swift in Sources */,
 				EDC20D86F8A3AB5EA38151E9 /* AppModel.swift in Sources */,
 				58CEE318C7907E03BB8598D7 /* BoostsView.swift in Sources */,
 				D9F4054EE1662E943BA464FE /* ClashTimersApp.swift in Sources */,

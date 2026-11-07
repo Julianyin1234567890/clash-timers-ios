@@ -37,9 +37,7 @@ final class AppModel {
     @discardableResult
     func importVillage(_ text: String) -> Bool {
         do {
-            var updated = document
-            updated.state = try SyncLogic.apply(text, to: document.state)
-            return try commit(updated)
+            return try commit { $0.state = try SyncLogic.apply(text, to: $0.state) }
         } catch {
             report(error, title: "Couldn’t import village")
             return false
@@ -61,10 +59,10 @@ final class AppModel {
     @discardableResult
     func saveSettings(_ settings: AppSettings) -> Bool {
         do {
-            var updated = document
-            updated.settings = settings
-            updated.settings.playerName = String(settings.playerName.trimmingCharacters(in: .whitespacesAndNewlines).prefix(24))
-            return try commit(updated)
+            return try commit {
+                $0.settings = settings
+                $0.settings.playerName = String(settings.playerName.trimmingCharacters(in: .whitespacesAndNewlines).prefix(24))
+            }
         } catch { report(error, title: "Couldn’t save settings"); return false }
     }
 
@@ -91,18 +89,15 @@ final class AppModel {
     }
 
     private func change(_ edit: (inout StoredDocument) -> Void) {
-        var updated = document
-        edit(&updated)
-        do { try commit(updated) } catch { report(error, title: "Couldn’t save changes") }
+        do { try commit(edit) } catch { report(error, title: "Couldn’t save changes") }
     }
 
     @discardableResult
-    private func commit(_ updated: StoredDocument) throws -> Bool {
+    private func commit(_ edit: (inout StoredDocument) throws -> Void) throws -> Bool {
         guard isReady, let store else {
             throw SharedStoreError.unavailableGroup(SharedStore.groupIdentifier ?? "")
         }
-        try store.save(updated)
-        document = updated
+        document = try store.update(edit)
         if SharedStore.hasWidgetSupport { WidgetCenter.shared.reloadAllTimelines() }
         scheduleNotifications()
         return true
@@ -110,7 +105,8 @@ final class AppModel {
 
     private func scheduleNotifications() {
         guard !isTesting else { return }
-        notifications.replace(with: document) { [weak self] error in
+        guard let store else { return }
+        notifications.replace(using: store) { [weak self] error in
             self?.report(error, title: "Couldn’t schedule finish alerts")
         }
     }

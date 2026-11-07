@@ -6,7 +6,7 @@ import ClashTimersCore
 @MainActor
 final class NotificationScheduler: NSObject, UNUserNotificationCenterDelegate {
     private let center = UNUserNotificationCenter.current()
-    private var pendingDocument: StoredDocument?
+    private var pendingStore: DocumentStore?
     private var isUpdating = false
 
     override init() {
@@ -18,19 +18,30 @@ final class NotificationScheduler: NSObject, UNUserNotificationCenterDelegate {
         try await center.requestAuthorization(options: [.alert, .sound])
     }
 
-    func replace(with document: StoredDocument, onError: @escaping (Error) -> Void) {
-        pendingDocument = document
+    func replace(using store: DocumentStore, onError: @escaping (Error) -> Void) {
+        pendingStore = store
         guard !isUpdating else { return }
         isUpdating = true
         Task {
             defer { isUpdating = false }
             var lastError: Error?
-            while let next = pendingDocument {
-                pendingDocument = nil
-                do { try await reconcile(next); lastError = nil }
+            while let next = pendingStore {
+                pendingStore = nil
+                do { try await reconcileLatest(next); lastError = nil }
                 catch { lastError = error }
             }
             if let lastError { onError(lastError) }
+        }
+    }
+
+    /// Re-read after asynchronous scheduling so another process cannot leave an older plan behind.
+    func reconcileLatest(_ store: DocumentStore) async throws {
+        var document = try store.load()
+        while true {
+            try await reconcile(document)
+            let latest = try store.load()
+            if latest == document { return }
+            document = latest
         }
     }
 

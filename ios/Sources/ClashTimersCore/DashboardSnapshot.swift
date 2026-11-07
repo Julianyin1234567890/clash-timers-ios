@@ -31,8 +31,9 @@ public struct DashboardSnapshot: Sendable {
         rows = village.jobs.map { job in
             let finish = engine.finishTime(for: job, village: village, state: document.state)
             let remaining = engine.remaining(for: job, village: village, state: document.state, at: now)
-            let full = max(1, max(gameData.fullDuration(for: job) ?? 0,
-                                  document.state.firstRemaining[job.id] ?? job.remainingAtT0))
+            let duration = gameData.fullDuration(for: job)
+            let full = max(1, duration.flatMap { $0 >= job.remainingAtT0 ? $0 : nil }
+                ?? max(document.state.firstRemaining[job.id] ?? 0, job.remainingAtT0))
             return TimerRow(job: job, title: gameData.title(for: job), label: gameData.label(for: job),
                             finishAt: finish, progress: min(1, max(0, 1 - Double(remaining) / Double(full))),
                             isDone: finish <= now, helperLinked: document.state.links[job.category] == job.id,
@@ -47,7 +48,10 @@ public struct DashboardSnapshot: Sendable {
     }
 
     public var nextFinish: TimerRow? { rows.first { !$0.isDone } }
-    public func rows(for category: JobCategory) -> [TimerRow] { rows.filter { $0.job.category == category } }
+    public func rows(for category: JobCategory) -> [TimerRow] {
+        rows.filter { $0.job.category == category && !($0.job.isGoblin && $0.isDone) }
+            .sorted { $0.finishAt == $1.finishAt ? $0.id < $1.id : $0.finishAt < $1.finishAt }
+    }
 }
 
 public enum Countdown {
@@ -63,7 +67,19 @@ public enum WidgetSchedule {
     public static func dates(for document: StoredDocument, now: Int) -> [Int] {
         let snapshot = DashboardSnapshot(document: document, at: now)
         let finishes = snapshot.rows.map(\.finishAt).filter { $0 > now }
-        return [now] + Array(Set(finishes)).sorted().prefix(60)
+        var edges = Set(finishes)
+        // Refresh the progress fills, boost labels and sync age once per minute.
+        edges.formUnion(stride(from: now + 60, through: now + 3600, by: 60))
+        for boost in document.state.boosts where boost.end > now {
+            edges.insert(boost.start)
+            edges.insert(boost.end)
+        }
+        // A live countdown displays a day prefix plus the remaining hours.
+        for finish in finishes {
+            let days = (finish - now) / 86400
+            if days > 0 { edges.insert(finish - days * 86400 + 1) }
+        }
+        return [now] + edges.filter { $0 > now }.sorted().prefix(120)
     }
 }
 

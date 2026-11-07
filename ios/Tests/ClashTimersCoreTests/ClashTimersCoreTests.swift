@@ -255,6 +255,58 @@ final class ClashTimersCoreTests: XCTestCase {
         XCTAssertEqual(TimerEngine(settings: document.settings.boosts).settings, BoostSettings())
     }
 
+    func testConcurrentWidgetActionsPreserveBoostsAndSettings() throws {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let store = DocumentStore(fileURL: folder.appendingPathComponent("state.json"))
+        try store.update { $0.state = try SyncLogic.apply(minimal(), to: $0.state, now: 100) }
+        DispatchQueue.concurrentPerform(iterations: 12) { _ in
+            do {
+                try store.update {
+                    TimerActions.addBoost(.builderPotion, state: &$0.state, settings: $0.settings.boosts, now: 100)
+                }
+            } catch { XCTFail(error.localizedDescription) }
+        }
+        try store.update { $0.settings.playerName = "Kuswa" }
+        let saved = try store.load()
+        XCTAssertEqual(saved.state.boosts.count, 12)
+        XCTAssertEqual(saved.state.boosts.map(\.start), (0..<12).map { 100 + $0 * 3600 })
+        XCTAssertEqual(saved.settings.playerName, "Kuswa")
+        XCTAssertThrowsError(try store.update { $0.settings.boosts.boostDuration = 0 })
+        XCTAssertEqual(try store.load(), saved)
+    }
+
+    func testOriginalWidgetLabelsAndAssets() throws {
+        var document = StoredDocument()
+        document.state = try SyncLogic.apply(minimal(), to: AppState(), now: 100)
+        XCTAssertEqual(VillageLabels.boostText(.builderBite, document: document, now: 100), "Bite")
+        TimerActions.addBoost(.builderPotion, state: &document.state, settings: document.settings.boosts, now: 100)
+        TimerActions.addBoost(.builderPotion, state: &document.state, settings: document.settings.boosts, now: 100)
+        XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 100), "2h")
+        XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 161), "1h 59m")
+        XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 7300), "+1")
+        XCTAssertEqual(VillageLabels.syncAge(timestamp: 100, now: 280), "synced 3m ago")
+        for icon in ["1000011", "1000084", "28000007", "73000016", "builder_potion", "apprentice"] {
+            XCTAssertNotNil(GameData.resourceBundle.url(forResource: icon, withExtension: "png"))
+        }
+        XCTAssertNotNil(GameData.resourceBundle.url(forResource: "lilita_one", withExtension: "ttf"))
+    }
+
+    func testOriginalRowsRetainCompletionsAndRemoveFinishedGoblin() throws {
+        var document = StoredDocument()
+        let export = """
+        {"tag":"#ROWS","timestamp":100,"buildings":[
+          {"data":1000008,"lvl":4,"timer":100},
+          {"data":1000011,"lvl":4,"timer":200},
+          {"data":1000021,"lvl":4,"timer":100,"extra":true}]}
+        """
+        document.state = try SyncLogic.apply(export, to: AppState(), now: 100)
+        let snapshot = DashboardSnapshot(document: document, at: 201)
+        XCTAssertEqual(snapshot.rows(for: .builder).map(\.job.dataID), [1000008, 1000011])
+        XCTAssertEqual(snapshot.rows(for: .builder).map(\.isDone), [true, false])
+        XCTAssertEqual(snapshot.totalBuilders - snapshot.freeBuilders, 1)
+    }
+
     func testCountdownClampsFinishedTimers() {
         XCTAssertEqual(Countdown.text(seconds: -5), "00:00:00")
         XCTAssertEqual(Countdown.text(seconds: 86401), "1d 00:00:01")

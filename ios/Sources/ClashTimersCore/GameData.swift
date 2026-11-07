@@ -1,6 +1,8 @@
 import Foundation
 
 public struct GameData: Sendable {
+    public static let resourceBundle = Bundle.module
+
     public let names: [String: String]
     public let times: [String: [String: Int]]
 
@@ -29,7 +31,7 @@ public struct GameData: Sendable {
     }
 
     public static var legalNotices: String {
-        ["LICENSE", "NOTICE"].compactMap { name in
+        ["LICENSE", "NOTICE", "LilitaOne-OFL.txt"].compactMap { name in
             Bundle.module.url(forResource: name, withExtension: nil).flatMap { try? String(contentsOf: $0) }
         }.joined(separator: "\n\n")
     }

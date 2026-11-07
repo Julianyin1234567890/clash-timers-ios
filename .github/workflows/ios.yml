@@ -54,6 +54,8 @@ jobs:
         if: always()
         with:
           name: iPhone-simulator-tests
-          path: ${{ runner.temp }}/simulator/*.xcresult
+          path: |
+            ${{ runner.temp }}/simulator/*.xcresult
+            ${{ runner.temp }}/simulator/screenshots/
           if-no-files-found: ignore
           retention-days: 7

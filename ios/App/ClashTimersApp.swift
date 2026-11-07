@@ -7,7 +7,7 @@ struct ClashTimersApp: App {
     var body: some Scene {
         WindowGroup {
             DashboardView(model: model)
-                .tint(.orange)
+                .tint(OriginalTheme.gold)
         }
     }
 }

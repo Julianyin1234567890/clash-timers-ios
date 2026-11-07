@@ -16,7 +16,10 @@ for runtime in runtimes:
 else:
     sys.exit("No iPhone simulator is installed for the selected Xcode. Install an iOS simulator runtime.")
 ')"
+result="$build_dir/Tests-$(date +%s).xcresult"
 xcodebuild test -project ClashTimers.xcodeproj -scheme ClashTimers -configuration Debug \
     -destination "id=$device_id" -derivedDataPath "$build_dir/DerivedData" \
-    -resultBundlePath "$build_dir/Tests-$(date +%s).xcresult" \
+    -resultBundlePath "$result" \
     -parallel-testing-enabled NO -maximum-concurrent-test-simulator-destinations 1
+
+xcrun xcresulttool export attachments --path "$result" --output-path "$build_dir/screenshots"

@@ -1,83 +1,162 @@
 import SwiftUI
 import ClashTimersCore
 
-extension JobCategory {
-    var color: Color {
-        switch self {
-        case .builder: return .orange
-        case .lab: return .purple
-        case .pet: return .teal
+struct TimerRowView: View {
+    let row: TimerRow?
+    let category: JobCategory
+    let date: Date
+    var compact = false
+    var systemCountdown = false
+    var rowHeight: CGFloat?
+    var handler: ((VillageAction) -> Void)?
+
+    private var height: CGFloat { rowHeight ?? (compact ? 25 : 30) }
+    private var iconSize: CGFloat { min(compact ? 20 : 24, height - 3) }
+    private var title: String { row?.title ?? (category == .lab ? "Laboratory" : "Pet House") }
+    private var finished: Bool { row?.isDone ?? true }
+    private var artwork: [String] {
+        guard let job = row?.job else { return [category == .lab ? "1000007" : "1000068"] }
+        return [job.dataID, job.typeDataID, job.parentDataID].compactMap { $0 }.map(String.init)
+    }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            VillageArtwork(names: artwork, fallback: initials)
+                .padding(1).frame(width: iconSize, height: iconSize)
+                .background(.black.opacity(0.35), in: RoundedRectangle(cornerRadius: 6))
+                .overlay { RoundedRectangle(cornerRadius: 6).stroke(.white.opacity(0.15), lineWidth: 1) }
+            name
+            Spacer(minLength: 0)
+            status
+            helper.frame(width: compact ? 19 : 22, height: compact ? 19 : 22)
+        }
+        .padding(.horizontal, 4)
+        .frame(height: height)
+        .background { background }
+        .accessibilityElement(children: .contain)
+    }
+
+    private var initials: String {
+        title.split(separator: " ").prefix(2).compactMap(\.first).map(String.init).joined()
+    }
+
+    private var name: some View {
+        HStack(spacing: 3) {
+            if row?.job.isGoblin == true {
+                Text("GOBLIN").font(.system(size: compact ? 7 : 8, weight: .bold))
+                    .foregroundStyle(OriginalTheme.color(0x123B0C)).padding(.horizontal, 3).padding(.vertical, 1)
+                    .background(OriginalTheme.color(0xB8F07A), in: RoundedRectangle(cornerRadius: 4))
+                    .overlay { RoundedRectangle(cornerRadius: 4).stroke(OriginalTheme.color(0x2F5E14), lineWidth: 1) }
+            }
+            Text(title).villageText(compact ? 12 : 13.5)
+                .lineLimit(1).truncationMode(.tail)
+            if let row, !finished {
+                Text(row.job.isNewBuilding ? "(new)" : "→ \(row.job.targetLevel)")
+                    .villageText(compact ? 10 : 11, color: OriginalTheme.cream)
+                    .fixedSize()
+            }
+        }
+    }
+
+    private var status: some View {
+        HStack(spacing: 3) {
+            if let row, !finished {
+                ClockArtwork().frame(width: compact ? 11 : 12, height: compact ? 11 : 12)
+                VillageCountdown(finish: row.finishDate, date: date, system: systemCountdown)
+                    .villageText(compact ? 12 : 13)
+            } else {
+                Text(row == nil ? "Idle" : "Completed").villageText(compact ? 12 : 13).fixedSize()
+                if row != nil {
+                    Image(systemName: "checkmark").font(.system(size: 12, weight: .heavy))
+                        .foregroundStyle(OriginalTheme.green)
+                }
+            }
+        }
+        .layoutPriority(1)
+    }
+
+    @ViewBuilder
+    private var helper: some View {
+        if let row, !finished, category != .pet {
+            VillageActionButton(action: .helper(row.id), handler: handler) {
+                Group {
+                    if row.helperLinked {
+                        VillageArtwork(names: [category == .builder ? "apprentice" : "lab_assistant"], fallback: "H")
+                            .padding(2)
+                    } else {
+                        Text("+").font(.system(size: compact ? 15 : 17, weight: .heavy)).foregroundStyle(.white)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(row.helperLinked ? OriginalTheme.goldButton : OriginalTheme.greenButton,
+                            in: RoundedRectangle(cornerRadius: 7))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 7)
+                        .strokeBorder(OriginalTheme.color(row.helperLinked ? 0x8A5A10 : 0x2F5E14), lineWidth: 1.5)
+                }
+            }
+            .accessibilityLabel("\(row.helperLinked ? "Unlink" : "Link") helper for \(row.title)")
+            .accessibilityIdentifier("helper-\(row.id)")
+        } else {
+            Color.clear
+        }
+    }
+
+    private var background: some View {
+        GeometryReader { geometry in
+            RoundedRectangle(cornerRadius: 7)
+                .fill(OriginalTheme.color(0x2E2219))
+                .overlay(alignment: .leading) {
+                    if finished {
+                        OriginalTheme.done
+                    } else if let row {
+                        OriginalTheme.progress.frame(width: max(0, geometry.size.width - 3) * row.progress)
+                            .padding(1.5)
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 7))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 7).strokeBorder(OriginalTheme.color(0x1E160F), lineWidth: 1.5)
+                }
         }
     }
 }
 
-struct TimerRowView: View {
-    let row: TimerRow
-    let now: Int
-    let toggleHelper: () -> Void
+struct VillageCountdown: View {
+    let finish: Date
+    let date: Date
+    var system: Bool
+    private var remaining: Int { max(0, Int(finish.timeIntervalSince(date))) }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .top, spacing: 12) {
-                Image(systemName: row.isDone ? "checkmark.circle.fill" : row.job.category.symbol)
-                    .font(.title3)
-                    .foregroundStyle(row.isDone ? .green : row.job.category.color)
-                    .frame(width: 40, height: 40)
-                    .background(row.job.category.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(row.title).font(.headline)
-                    Text(row.job.isNewBuilding ? "New construction" : "Level \(row.job.currentLevel) → \(row.job.targetLevel)")
-                        .font(.subheadline).foregroundStyle(.secondary)
-                    if row.job.isGoblin {
-                        Label("Goblin Builder", systemImage: "sparkles")
-                            .font(.caption).foregroundStyle(.green)
-                    }
-                }
-                Spacer(minLength: 0)
-                if row.helperAvailable && !row.isDone {
-                    Button(action: toggleHelper) {
-                        Image(systemName: row.helperLinked ? "person.crop.circle.fill.badge.checkmark" : "person.crop.circle.badge.plus")
-                            .font(.title3)
-                            .foregroundStyle(row.helperLinked ? .orange : .secondary)
-                            .frame(width: 44, height: 44)
-                            .background(.quaternary, in: Circle())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("\(row.helperLinked ? "Unlink" : "Link") helper for \(row.title)")
-                }
-            }
-            if row.isDone {
-                Label("Finished — ready for the next upgrade", systemImage: "checkmark")
-                    .font(.subheadline.weight(.medium)).foregroundStyle(.green)
-            } else {
-                ViewThatFits(in: .horizontal) {
-                    HStack(alignment: .firstTextBaseline) {
-                        countdown
-                        Spacer()
-                        finishLabel
-                    }
-                    VStack(alignment: .leading, spacing: 4) { countdown; finishLabel }
-                }
-                ProgressView(value: row.progress).tint(row.job.category.color)
-                    .accessibilityLabel("Upgrade progress")
-                if row.helperLinked {
-                    Label("Includes future helper sessions", systemImage: "person.fill.checkmark")
-                        .font(.caption).foregroundStyle(.secondary)
-                }
-            }
+        if system {
+            HStack(spacing: 0) {
+                if remaining >= 86400 { Text("\(remaining / 86400)d ").fixedSize() }
+                let end = max(date, finish.addingTimeInterval(-Double(remaining / 86400 * 86400)))
+                Text(timerInterval: date...end, countsDown: true)
+                    .monospacedDigit().multilineTextAlignment(.trailing).frame(width: 55)
+            }.fixedSize(horizontal: true, vertical: false)
+        } else {
+            Text(Countdown.text(seconds: remaining)).monospacedDigit().fixedSize()
         }
-        .padding(16)
-        .background(Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
     }
-    private var countdown: some View {
-        Text(Countdown.text(seconds: row.finishAt - now))
-            .font(.system(.title3, design: .rounded, weight: .bold))
-            .monospacedDigit()
-            .accessibilityLabel("Time remaining \(Countdown.text(seconds: row.finishAt - now))")
-    }
-    private var finishLabel: some View {
-        Text(row.finishDate, format: .dateTime.weekday(.abbreviated).hour().minute())
-            .font(.caption).foregroundStyle(.secondary)
+}
+
+/// Original Android vector clock, used when the optional clock artwork is absent.
+struct ClockArtwork: View {
+    var body: some View {
+        ZStack {
+            Circle().fill(OriginalTheme.color(0xB68A22))
+            Circle().strokeBorder(OriginalTheme.color(0x6B4A10), lineWidth: 0.7)
+            Circle().fill(OriginalTheme.color(0xE8C56A)).padding(1.5)
+            Circle().fill(.white).padding(2.3)
+            GeometryReader { geometry in
+                Path { path in
+                    path.move(to: CGPoint(x: geometry.size.width * 0.5, y: geometry.size.height * 0.32))
+                    path.addLine(to: CGPoint(x: geometry.size.width * 0.5, y: geometry.size.height * 0.5))
+                    path.addLine(to: CGPoint(x: geometry.size.width * 0.63, y: geometry.size.height * 0.575))
+                }.stroke(OriginalTheme.color(0x6B4A10), style: StrokeStyle(lineWidth: 1, lineCap: .round))
+            }
+        }.accessibilityHidden(true)
     }
 }

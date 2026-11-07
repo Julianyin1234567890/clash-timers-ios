@@ -1,6 +1,12 @@
 import Foundation
+#if canImport(Darwin)
+import Darwin
+#else
+import Glibc
+#endif
 
 public struct DocumentStore: Sendable {
+    private static let mutationLock = NSLock()
     public let fileURL: URL
     public init(fileURL: URL) { self.fileURL = fileURL }
 
@@ -25,6 +31,27 @@ public struct DocumentStore: Sendable {
     }
 
     public func save(_ document: StoredDocument) throws {
+        _ = try update { $0 = document }
+    }
+
+    /// Serialize app and widget read-modify-write operations across threads and processes.
+    @discardableResult
+    public func update(_ edit: (inout StoredDocument) throws -> Void) throws -> StoredDocument {
+        Self.mutationLock.lock()
+        defer { Self.mutationLock.unlock() }
+        try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let fd = open(fileURL.appendingPathExtension("lock").path, O_CREAT | O_RDWR, 0o600)
+        guard fd >= 0 else { throw NSError(domain: NSPOSIXErrorDomain, code: Int(errno)) }
+        defer { close(fd) }
+        guard lockf(fd, F_LOCK, 0) == 0 else { throw NSError(domain: NSPOSIXErrorDomain, code: Int(errno)) }
+        defer { _ = lockf(fd, F_ULOCK, 0) }
+        var document = try load()
+        try edit(&document)
+        try write(document)
+        return document
+    }
+
+    private func write(_ document: StoredDocument) throws {
         try validate(document)
         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         let encoder = JSONEncoder()

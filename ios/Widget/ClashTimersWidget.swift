@@ -29,7 +29,7 @@ struct VillageWidgetView: View {
 
     var body: some View {
         VillageWidgetContent(entry: entry, family: family)
-            .containerBackground(.background, for: .widget)
+            .containerBackground(.clear, for: .widget)
             .widgetURL(URL(string: "clashtimers://timers"))
     }
 }
@@ -42,5 +42,7 @@ struct ClashTimersWidget: Widget {
             .configurationDisplayName("Clash Timers")
             .description("Builder, laboratory, and pet upgrade countdowns.")
             .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+            .contentMarginsDisabled()
+            .containerBackgroundRemovable(false)
     }
 }
