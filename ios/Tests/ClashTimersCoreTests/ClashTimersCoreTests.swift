@@ -308,8 +308,13 @@ final class ClashTimersCoreTests: XCTestCase {
     }
 
     func testCountdownClampsFinishedTimers() {
-        XCTAssertEqual(Countdown.text(seconds: -5), "00:00:00")
+        XCTAssertEqual(Countdown.text(seconds: -5), "0:00:00")
         XCTAssertEqual(Countdown.text(seconds: 86401), "1d 00:00:01")
-        XCTAssertEqual(Countdown.text(seconds: 3661), "01:01:01")
+        XCTAssertEqual(Countdown.text(seconds: 3661), "1:01:01")
+        XCTAssertEqual(Countdown.timerPrefix(seconds: 86400 + 3661), "1d 0")
+        XCTAssertEqual(Countdown.timerPrefix(seconds: 86400 + 231), "1d 00:0")
+        XCTAssertEqual(Countdown.timerPrefix(seconds: 231), "0:0")
+        XCTAssertEqual(Countdown.timerPrefix(seconds: 3600), "")
+        XCTAssertEqual(Countdown.timerPrefix(seconds: 3599), "0:")
     }
 }

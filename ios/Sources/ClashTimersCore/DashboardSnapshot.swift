@@ -57,8 +57,28 @@ public struct DashboardSnapshot: Sendable {
 public enum Countdown {
     public static func text(seconds: Int) -> String {
         let s = max(0, seconds)
-        let time = String(format: "%02d:%02d:%02d", (s % 86400) / 3600, (s % 3600) / 60, s % 60)
-        return s >= 86400 ? "\(s / 86400)d \(time)" : time
+        let hours = (s % 86400) / 3600
+        let minutes = (s % 3600) / 60
+        let seconds = s % 60
+        if s >= 86400 {
+            return String(format: "%dd %02d:%02d:%02d", s / 86400, hours, minutes, seconds)
+        }
+        return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    /// Supply the day/hour/minute padding around SwiftUI's live system timer.
+    public static func timerPrefix(seconds: Int) -> String {
+        let seconds = max(0, seconds)
+        let days = seconds / 86400
+        let inDay = seconds % 86400
+        var prefix = days > 0 ? "\(days)d " : ""
+        if inDay < 3600 {
+            prefix += days > 0 ? "00:" : "0:"
+            if inDay < 600 { prefix += "0" }
+        } else if days > 0 && inDay < 36000 {
+            prefix += "0"
+        }
+        return prefix
     }
 }
 
@@ -77,7 +97,9 @@ public enum WidgetSchedule {
         // A live countdown displays a day prefix plus the remaining hours.
         for finish in finishes {
             let days = (finish - now) / 86400
-            if days > 0 { edges.insert(finish - days * 86400 + 1) }
+            for boundary in [0, 600, 3600, 36000] {
+                edges.insert(finish - days * 86400 - boundary + 1)
+            }
         }
         return [now] + edges.filter { $0 > now }.sorted().prefix(120)
     }

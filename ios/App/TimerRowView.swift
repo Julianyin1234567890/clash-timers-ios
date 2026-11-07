@@ -62,7 +62,7 @@ struct TimerRowView: View {
         HStack(spacing: 3) {
             if let row, !finished {
                 ClockArtwork().frame(width: compact ? 11 : 12, height: compact ? 11 : 12)
-                VillageCountdown(finish: row.finishDate, date: date, system: systemCountdown)
+                VillageCountdown(finish: row.finishDate, date: date, system: systemCountdown, fontSize: compact ? 12 : 13)
                     .villageText(compact ? 12 : 13)
             } else {
                 Text(row == nil ? "Idle" : "Completed").villageText(compact ? 12 : 13).fixedSize()
@@ -126,15 +126,18 @@ struct VillageCountdown: View {
     let finish: Date
     let date: Date
     var system: Bool
+    var fontSize: CGFloat = 13
     private var remaining: Int { max(0, Int(finish.timeIntervalSince(date))) }
 
     var body: some View {
         if system {
             HStack(spacing: 0) {
-                if remaining >= 86400 { Text("\(remaining / 86400)d ").fixedSize() }
+                Text(Countdown.timerPrefix(seconds: remaining)).fixedSize()
                 let end = max(date, finish.addingTimeInterval(-Double(remaining / 86400 * 86400)))
                 Text(timerInterval: date...end, countsDown: true)
-                    .monospacedDigit().multilineTextAlignment(.trailing).frame(width: 55)
+                    .monospacedDigit().multilineTextAlignment(.trailing)
+                    .lineLimit(1).minimumScaleFactor(0.75)
+                    .frame(width: fontSize * (remaining % 86400 < 3600 ? 2.9 : 4.6))
             }.fixedSize(horizontal: true, vertical: false)
         } else {
             Text(Countdown.text(seconds: remaining)).monospacedDigit().fixedSize()

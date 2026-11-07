@@ -165,13 +165,18 @@ struct VillagePanel: View {
     private func footer(_ snapshot: DashboardSnapshot) -> some View {
         let apprentice = VillageLabels.helperName(.builder, snapshot: snapshot)
         let assistant = VillageLabels.helperName(.lab, snapshot: snapshot)
-        return HStack(alignment: .center, spacing: 5) {
-            (Text(apprentice.map { "Apprentice: \($0)" } ?? "Apprentice idle")
+        let status: Text
+        if let apprentice, let assistant {
+            status = Text("Helpers: \(apprentice) · \(assistant)").foregroundColor(OriginalTheme.cream)
+        } else {
+            status = (Text(apprentice.map { "Apprentice: \($0)" } ?? "Apprentice idle")
                 .foregroundColor(apprentice == nil ? OriginalTheme.idle : OriginalTheme.cream)
              + Text(" · ").foregroundColor(OriginalTheme.cream)
              + Text(assistant.map { "Assistant: \($0)" } ?? "Assistant idle")
                 .foregroundColor(assistant == nil ? OriginalTheme.idle : OriginalTheme.cream))
-                .font(OriginalTheme.font(11)).lineLimit(1).minimumScaleFactor(0.7)
+        }
+        return HStack(alignment: .center, spacing: 5) {
+            status.font(OriginalTheme.font(11)).lineLimit(1).minimumScaleFactor(0.7)
             Spacer(minLength: 0)
             if let village = snapshot.village {
                 Text(VillageLabels.syncAge(timestamp: village.timestamp, now: now))
@@ -192,7 +197,7 @@ struct VillagePanel: View {
                 }
                 HStack(spacing: 4) {
                     ClockArtwork().frame(width: 14, height: 14)
-                    VillageCountdown(finish: row.finishDate, date: date, system: true)
+                    VillageCountdown(finish: row.finishDate, date: date, system: true, fontSize: 16)
                         .villageText(16)
                 }
             } else {
