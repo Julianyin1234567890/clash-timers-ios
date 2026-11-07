@@ -131,14 +131,12 @@ struct VillageCountdown: View {
 
     var body: some View {
         if system {
-            HStack(spacing: 0) {
-                Text(Countdown.timerPrefix(seconds: remaining)).fixedSize()
-                let end = max(date, finish.addingTimeInterval(-Double(remaining / 86400 * 86400)))
-                Text(timerInterval: date...end, countsDown: true)
-                    .monospacedDigit().multilineTextAlignment(.trailing)
-                    .lineLimit(1).minimumScaleFactor(0.75)
-                    .frame(width: fontSize * (remaining % 86400 < 3600 ? 2.9 : 4.6))
-            }.fixedSize(horizontal: true, vertical: false)
+            let end = max(date, finish.addingTimeInterval(-Double(remaining / 86400 * 86400)))
+            (Text(Countdown.timerPrefix(seconds: remaining))
+             + Text(timerInterval: date...end, countsDown: true))
+                .monospacedDigit().multilineTextAlignment(.trailing)
+                .lineLimit(1).minimumScaleFactor(0.75)
+                .frame(width: fontSize * (remaining >= 86400 ? 7 : 4.8))
         } else {
             Text(Countdown.text(seconds: remaining)).monospacedDigit().fixedSize()
         }
