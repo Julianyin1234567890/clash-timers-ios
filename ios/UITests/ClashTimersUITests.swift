@@ -58,7 +58,8 @@ final class ClashTimersUITests: XCTestCase {
         active.lifetime = .keepAlways
         self.add(active)
         undo.tap()
-        XCTAssertFalse(undo.exists)
+        // The panel uses TimelineView's date, which advances on the next one-second tick.
+        XCTAssertTrue(undo.waitForNonExistence(timeout: 5))
         let helper = app.buttons["helper-BUILDER:1000008:5#0"]
         XCTAssertEqual(helper.label, "Link helper for Cannon")
         helper.tap()
