@@ -11,6 +11,7 @@ struct DashboardView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var sheet: AppSheet?
     @State private var showBoosts = false
+    @State private var syncRequested = false
 
     var body: some View {
         NavigationStack {
@@ -19,17 +20,22 @@ struct DashboardView: View {
                     VStack(spacing: 14) {
                         VillagePanel(document: model.document, date: context.date,
                                      error: model.storageError, handler: handle)
+                        if let status = model.syncStatus {
+                            Label(status, systemImage: "checkmark.circle.fill")
+                                .font(.subheadline).foregroundStyle(OriginalTheme.cream)
+                                .accessibilityIdentifier("syncSuccess")
+                        }
                         if model.document.state.exportJSON == nil && model.isReady {
-                            Button("Import your village") { sheet = .importVillage }
+                            Button("Sync copied village") { requestSync() }
                                 .font(OriginalTheme.font(18))
                                 .foregroundStyle(OriginalTheme.ink)
                                 .padding(.horizontal, 20).padding(.vertical, 12)
                                 .background(OriginalTheme.goldButton, in: RoundedRectangle(cornerRadius: 10))
                                 .buttonStyle(OriginalButtonStyle())
-                                .accessibilityIdentifier("startImport")
+                                .accessibilityIdentifier("startSync")
                         } else if let village = model.document.state.village {
                             Text(village.tag).font(.footnote).foregroundStyle(OriginalTheme.cream)
-                            Text("Village saved on this iPhone. Timers keep running between imports.")
+                            Text("Village saved on this iPhone. Copy new data in Clash, then tap Sync to update it.")
                                 .font(.caption).foregroundStyle(OriginalTheme.cream)
                                 .multilineTextAlignment(.center)
                             Button("Log a potion or snack") { showBoosts = true }
@@ -39,6 +45,10 @@ struct DashboardView: View {
                                 .font(.caption).foregroundStyle(OriginalTheme.cream)
                                 .multilineTextAlignment(.center)
                         }
+                        Button("Paste village data manually") { sheet = .importVillage }
+                            .font(.footnote).foregroundStyle(OriginalTheme.gold)
+                            .disabled(!model.isReady)
+                            .accessibilityIdentifier("startImport")
                     }
                     .padding(12).frame(maxWidth: 580).frame(maxWidth: .infinity)
                 }
@@ -56,8 +66,8 @@ struct DashboardView: View {
                         .accessibilityLabel("Settings").disabled(!model.isReady)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { sheet = .importVillage } label: { Image(systemName: "arrow.clockwise") }
-                        .accessibilityLabel("Import updated village").disabled(!model.isReady)
+                    Button { requestSync() } label: { Image(systemName: "arrow.clockwise") }
+                        .accessibilityLabel("Sync copied village").disabled(!model.isReady)
                         .accessibilityIdentifier("syncVillage")
                 }
             }
@@ -74,12 +84,17 @@ struct DashboardView: View {
             )) {
                 Button("OK") { model.alert = nil }
             } message: { Text(model.alert?.message ?? "") }
-            .onChange(of: scenePhase) { _, phase in if phase == .active { model.refresh() } }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    model.refresh()
+                    completeRequestedSync()
+                }
+            }
             .onReceive(NotificationCenter.default.publisher(for: .villageDidChange)) { _ in model.refresh() }
             .onOpenURL { url in
                 guard url.scheme == "clashtimers" else { return }
                 switch url.host {
-                case "sync": sheet = .importVillage
+                case "sync": requestSync()
                 case "boosts": showBoosts = true
                 case "settings": sheet = .settings
                 default: break
@@ -88,9 +103,24 @@ struct DashboardView: View {
         }
     }
 
+    private func requestSync() {
+        sheet = nil
+        showBoosts = false
+        syncRequested = true
+        completeRequestedSync()
+    }
+
+    private func completeRequestedSync() {
+        // A widget link may arrive before the app becomes active. Consume it once;
+        // returning from the system's paste permission prompt must not read again.
+        guard syncRequested, scenePhase == .active else { return }
+        syncRequested = false
+        if !model.syncFromClipboard() { sheet = .importVillage }
+    }
+
     private func handle(_ action: VillageAction) {
         switch action {
-        case .sync: sheet = .importVillage
+        case .sync: requestSync()
         case .add(let type): model.addBoost(type)
         case .undo(let type): model.undoBoost(type)
         case .helper(let id):

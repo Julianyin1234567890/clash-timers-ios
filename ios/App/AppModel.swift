@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import WidgetKit
+import UIKit
 import ClashTimersCore
 
 struct AppAlert: Identifiable {
@@ -15,6 +16,7 @@ final class AppModel {
     private(set) var document = StoredDocument()
     private(set) var isReady = false
     private(set) var storageError: String?
+    private(set) var syncStatus: String?
     var alert: AppAlert?
 
     @ObservationIgnored private var store: DocumentStore?
@@ -36,12 +38,30 @@ final class AppModel {
 
     @discardableResult
     func importVillage(_ text: String) -> Bool {
+        syncStatus = nil
         do {
-            return try commit { $0.state = try SyncLogic.apply(text, to: $0.state) }
+            let saved = try commit { $0.state = try SyncLogic.apply(text, to: $0.state) }
+            if saved { syncStatus = "Village synced. Your timers are saved." }
+            return saved
         } catch {
             report(error, title: "Couldn’t import village")
             return false
         }
+    }
+
+    /// Called only after an explicit Sync tap, with the app in the foreground.
+    /// iOS may ask for permission to paste data copied in Clash of Clans.
+    @discardableResult
+    func syncFromClipboard() -> Bool {
+        syncStatus = nil
+        alert = nil
+        guard let text = UIPasteboard.general.string,
+              !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            alert = AppAlert(title: "No village data to paste",
+                             message: "Copy your village in Clash → Settings → More Settings → Data Export, then tap Sync. If iOS blocked the paste, use the Paste button here.")
+            return false
+        }
+        return importVillage(text)
     }
 
     func toggleHelper(_ row: TimerRow) {
@@ -85,6 +105,7 @@ final class AppModel {
     }
 
     func clearVillage() {
+        syncStatus = nil
         change { $0.state = AppState() }
     }
 

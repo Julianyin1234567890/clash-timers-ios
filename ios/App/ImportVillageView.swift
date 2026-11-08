@@ -11,23 +11,27 @@ struct ImportVillageView: View {
                 if let village = model.document.state.village {
                     Section {
                         Label("Saved village: \(village.tag)", systemImage: "checkmark.circle.fill")
-                        Text("Your timers are already saved. Import again after changing upgrades in the game; reopening this app does not need a new export.")
+                        Text("Your timers are already saved. For the quickest update, copy fresh village data in Clash and tap Sync on the widget or in this app.")
                             .font(.subheadline)
                     }
                 }
                 Section {
                     Label("Open Clash of Clans", systemImage: "1.circle.fill")
                     Label("Settings → More Settings → Data Export → Copy", systemImage: "2.circle.fill")
-                    Label("Paste your export below", systemImage: "3.circle.fill")
+                    Label("Tap Paste to save your village", systemImage: "3.circle.fill")
                 } header: { Text("Import your home village") }
                 footer: {
                     Text("This imports a snapshot. Later game changes do not arrive automatically. Everything stays on your device.")
                 }
 
                 Section {
-                    // PasteButton grants explicit paste access. No clipboard polling or launch-time reads.
-                    PasteButton(payloadType: String.self) { values in text = values.first ?? "" }
+                    // Explicit system paste also works if programmatic paste access was denied.
+                    PasteButton(payloadType: String.self) { values in
+                        text = values.first ?? ""
+                        if model.importVillage(text) { dismiss() }
+                    }
                         .buttonBorderShape(.capsule)
+                        .accessibilityIdentifier("pasteAndImport")
                     TextEditor(text: $text)
                         .font(.system(.footnote, design: .monospaced))
                         .autocorrectionDisabled()
@@ -37,7 +41,7 @@ struct ImportVillageView: View {
                         .accessibilityIdentifier("villageExportInput")
                 } header: { Text("Village export") }
                 footer: {
-                    Text("Importing another player tag replaces the current village. Invalid or older data won’t replace your saved timers.")
+                    Text("Paste saves immediately. If you enter the text yourself, tap Import. Another player tag replaces the current village; invalid or older data won’t replace your saved timers.")
                 }
 
                 Section {

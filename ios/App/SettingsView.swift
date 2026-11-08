@@ -57,7 +57,7 @@ struct SettingsView: View {
                 if SharedStore.hasWidgetSupport {
                     Section("Home Screen widget") {
                         Text("Touch and hold your Home Screen, choose Edit → Add Widget, then search for Clash Timers. Choose a small, medium, or large widget.")
-                        Text("Tap the widget to open your timers. Sync opens the import screen, where you choose when to paste.")
+                        Text("Copy village data in Clash, then tap Sync on the widget. The app opens and saves the copied village immediately. Choose Allow Paste if iOS asks. Ordinary app launches do not read your clipboard.")
                             .foregroundStyle(.secondary)
                     }
                 }

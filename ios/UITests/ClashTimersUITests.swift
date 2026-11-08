@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 
 final class ClashTimersUITests: XCTestCase {
     private var app: XCUIApplication!
@@ -70,7 +71,7 @@ final class ClashTimersUITests: XCTestCase {
 
     func testInvalidImportKeepsVillage() {
         importVillage()
-        app.buttons["syncVillage"].tap()
+        app.buttons["startImport"].tap()
         let input = app.textViews["villageExportInput"]
         XCTAssertTrue(input.waitForExistence(timeout: 5))
         let importScreen = XCTAttachment(screenshot: app.screenshot())
@@ -85,5 +86,98 @@ final class ClashTimersUITests: XCTestCase {
         alert.buttons["OK"].tap()
         app.buttons["Cancel"].tap()
         XCTAssertTrue(app.staticTexts["Cannon"].firstMatch.waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    private func copyVillage(tag: String = "#COPIED", timestamp: Int? = nil) {
+        let now = timestamp ?? Int(Date().timeIntervalSince1970)
+        UIPasteboard.general.string = "{\"tag\":\"\(tag)\",\"timestamp\":\(now),\"buildings\":[{\"data\":1000008,\"lvl\":4,\"timer\":36000}]}"
+    }
+
+    private func allowPasteIfRequested() {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let allow = springboard.buttons["Allow Paste"]
+        if allow.waitForExistence(timeout: 2) { allow.tap() }
+        let appAllow = app.buttons["Allow Paste"]
+        if appAllow.exists { appAllow.tap() }
+    }
+
+    private func assertSynced(_ tag: String = "#COPIED") {
+        allowPasteIfRequested()
+        XCTAssertTrue(app.staticTexts[tag].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["syncSuccess"].exists || app.otherElements["syncSuccess"].exists)
+        XCTAssertFalse(app.textViews["villageExportInput"].exists)
+        XCTAssertEqual(app.alerts.count, 0)
+    }
+
+    @MainActor
+    func testSyncTapImportsClipboardAndRejectsInvalidOrOlderData() {
+        let now = Int(Date().timeIntervalSince1970)
+        copyVillage(timestamp: now)
+        app.buttons["panelSync"].tap()
+        assertSynced()
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Copy then Sync"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+
+        // A bad or stale copy cannot overwrite the successfully synced village.
+        for contents in ["unrelated clipboard text",
+                         "{\"tag\":\"#COPIED\",\"timestamp\":\(now - 100),\"buildings\":[]}"] {
+            UIPasteboard.general.string = contents
+            app.buttons["syncVillage"].tap()
+            allowPasteIfRequested()
+            let alert = app.alerts["Couldn’t import village"]
+            XCTAssertTrue(alert.waitForExistence(timeout: 5))
+            alert.buttons["OK"].tap()
+            app.buttons["Cancel"].tap()
+            XCTAssertTrue(app.staticTexts["#COPIED"].exists)
+            XCTAssertTrue(app.staticTexts["Cannon"].exists)
+        }
+    }
+
+    @MainActor
+    func testWidgetSyncURLFromBackgroundAndOrdinaryLaunchDoesNotPaste() {
+        copyVillage()
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        // Opening the app normally must leave copied data untouched.
+        XCTAssertTrue(app.buttons["startSync"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["#COPIED"].exists)
+        XCUIDevice.shared.press(.home)
+        app.open(URL(string: "clashtimers://sync")!)
+        assertSynced()
+
+        // A subsequent widget request can import a different copy.
+        copyVillage(tag: "#UPDATED")
+        XCUIDevice.shared.press(.home)
+        app.open(URL(string: "clashtimers://sync")!)
+        assertSynced("#UPDATED")
+    }
+
+    @MainActor
+    func testWidgetSyncURLOnColdLaunch() {
+        copyVillage()
+        app.terminate()
+        app.open(URL(string: "clashtimers://sync")!)
+        assertSynced()
+        app.terminate()
+        app.launchArguments = ["--uitesting", "--keep-state"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["#COPIED"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    func testEmptyClipboardRecoveryAndPasteSavesImmediately() {
+        UIPasteboard.general.items = []
+        app.buttons["startSync"].tap()
+        let alert = app.alerts["No village data to paste"]
+        XCTAssertTrue(alert.waitForExistence(timeout: 5))
+        alert.buttons["OK"].tap()
+        copyVillage()
+        let paste = app.buttons["pasteAndImport"]
+        XCTAssertTrue(paste.waitForExistence(timeout: 5))
+        paste.tap()
+        assertSynced()
     }
 }
