@@ -46,6 +46,8 @@ struct VillagePanel: View {
                     .villageText(14, color: OriginalTheme.cream).padding(.vertical, 12)
             } else if size == .small {
                 small(snapshot)
+                Text("Tap to Sync copied data")
+                    .villageText(9, color: OriginalTheme.cream, shadow: false)
             } else {
                 sectionHeader(.builder, snapshot: snapshot)
                 let builders = snapshot.rows(for: .builder)

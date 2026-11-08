@@ -30,7 +30,9 @@ struct VillageWidgetView: View {
     var body: some View {
         VillageWidgetContent(entry: entry, family: family)
             .containerBackground(.clear, for: .widget)
-            .widgetURL(URL(string: "clashtimers://timers"))
+            // Small widgets have one link for the whole surface; their header Link
+            // cannot override it as it can in the medium and large families.
+            .widgetURL(URL(string: family == .systemSmall ? "clashtimers://sync" : "clashtimers://timers"))
     }
 }
 
