@@ -8,13 +8,20 @@ struct ImportVillageView: View {
     var body: some View {
         NavigationStack {
             Form {
+                if let village = model.document.state.village {
+                    Section {
+                        Label("Saved village: \(village.tag)", systemImage: "checkmark.circle.fill")
+                        Text("Your timers are already saved. Import again after changing upgrades in the game; reopening this app does not need a new export.")
+                            .font(.subheadline)
+                    }
+                }
                 Section {
                     Label("Open Clash of Clans", systemImage: "1.circle.fill")
-                    Label("Settings → Data Export → Copy", systemImage: "2.circle.fill")
+                    Label("Settings → More Settings → Data Export → Copy", systemImage: "2.circle.fill")
                     Label("Paste your export below", systemImage: "3.circle.fill")
-                } header: { Text("Sync your home village") }
+                } header: { Text("Import your home village") }
                 footer: {
-                    Text("Copy fresh data whenever you start an upgrade or change something in the game. Everything stays on your device.")
+                    Text("This imports a snapshot. Later game changes do not arrive automatically. Everything stays on your device.")
                 }
 
                 Section {

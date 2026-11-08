@@ -42,7 +42,7 @@ struct VillagePanel: View {
                 Text(error).villageText(13, color: OriginalTheme.color(0xFF7A7A))
                     .padding(.vertical, 10).lineLimit(4)
             } else if snapshot.village == nil {
-                Text("Copy village data in Clash, then tap Sync")
+                Text("Copy village data in Clash, then tap Import")
                     .villageText(14, color: OriginalTheme.cream).padding(.vertical, 12)
             } else if size == .small {
                 small(snapshot)
@@ -83,7 +83,7 @@ struct VillagePanel: View {
             VillageActionButton(action: .sync, handler: handler) {
                 HStack(spacing: 5) {
                     Image(systemName: "arrow.clockwise").font(.system(size: 12, weight: .semibold))
-                    if size != .small { Text("Sync").font(OriginalTheme.font(13)) }
+                    if size != .small { Text("Import").font(OriginalTheme.font(13)) }
                 }
                 .foregroundStyle(OriginalTheme.ink)
                 .padding(.horizontal, size == .small ? 7 : 10).padding(.top, 5).padding(.bottom, 7)
@@ -98,7 +98,7 @@ struct VillagePanel: View {
                         }
                 }
             }
-            .accessibilityLabel("Sync village").accessibilityIdentifier("panelSync")
+            .accessibilityLabel("Import updated village").accessibilityIdentifier("panelSync")
         }
         .padding(.horizontal, 4).padding(.top, 2).padding(.bottom, 6)
     }
@@ -138,7 +138,10 @@ struct VillagePanel: View {
                         .villageText(11, color: active ? OriginalTheme.gold : .white, shadow: false)
                         .fixedSize()
                 }.padding(.horizontal, 7).frame(height: 22)
-            }.accessibilityLabel("Record \(type.title)").accessibilityIdentifier("panel-add-\(type.rawValue)")
+            }
+            .accessibilityLabel("Log \(type.title) used in Clash")
+            .accessibilityHint("Adjusts predicted timers. Does not show how many items you own.")
+            .accessibilityIdentifier("panel-add-\(type.rawValue)")
             if active {
                 Rectangle().fill(OriginalTheme.color(0xC98A1A)).frame(width: 1, height: 12)
                 VillageActionButton(action: .undo(type), handler: handler) {

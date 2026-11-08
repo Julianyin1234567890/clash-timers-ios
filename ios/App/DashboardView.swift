@@ -29,9 +29,15 @@ struct DashboardView: View {
                                 .accessibilityIdentifier("startImport")
                         } else if let village = model.document.state.village {
                             Text(village.tag).font(.footnote).foregroundStyle(OriginalTheme.cream)
-                            Button("Potions & snacks") { showBoosts = true }
+                            Text("Village saved on this iPhone. Timers keep running between imports.")
+                                .font(.caption).foregroundStyle(OriginalTheme.cream)
+                                .multilineTextAlignment(.center)
+                            Button("Log a potion or snack") { showBoosts = true }
                                 .font(OriginalTheme.font(15)).foregroundStyle(OriginalTheme.gold)
                                 .accessibilityIdentifier("openBoosts")
+                            Text("Log items after using them in Clash. Your item stock is not shown here.")
+                                .font(.caption).foregroundStyle(OriginalTheme.cream)
+                                .multilineTextAlignment(.center)
                         }
                     }
                     .padding(12).frame(maxWidth: 580).frame(maxWidth: .infinity)
@@ -51,7 +57,7 @@ struct DashboardView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { sheet = .importVillage } label: { Image(systemName: "arrow.clockwise") }
-                        .accessibilityLabel("Sync").disabled(!model.isReady)
+                        .accessibilityLabel("Import updated village").disabled(!model.isReady)
                         .accessibilityIdentifier("syncVillage")
                 }
             }

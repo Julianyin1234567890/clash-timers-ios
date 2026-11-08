@@ -8,7 +8,7 @@ struct BoostsView: View {
             let now = Int(context.date.timeIntervalSince1970)
             List {
                 Section {
-                    Text("Use the potion or snack in Clash of Clans first, then record it here. These buttons only adjust your timer predictions.")
+                    Text("Log a potion or Builder Bite after using it in Clash of Clans. These controls adjust your predicted finish times. The app does not know which items you own or how many you have.")
                         .foregroundStyle(OriginalTheme.cream)
                 }
                 ForEach(BoostType.allCases) { type in
@@ -19,14 +19,14 @@ struct BoostsView: View {
                         }
                         let end = model.document.state.boosts.filter { $0.type == type && $0.end > now }.map(\.end).max()
                         if let end {
-                            Text("Active / queued: \(Countdown.text(seconds: end - now))")
+                            Text("Recorded effect remaining: \(Countdown.text(seconds: end - now))")
                                 .font(.subheadline).monospacedDigit()
                         } else {
-                            Text("No boost recorded").foregroundStyle(OriginalTheme.cream)
+                            Text("No active boost recorded").foregroundStyle(OriginalTheme.cream)
                         }
                         HStack {
                             Button { model.addBoost(type) } label: {
-                                Label("Record boost", systemImage: "plus.circle.fill")
+                                Label("Log one used in Clash", systemImage: "plus.circle.fill")
                             }
                             .buttonStyle(.borderedProminent)
                             .disabled(model.document.state.exportJSON == nil)
@@ -47,7 +47,7 @@ struct BoostsView: View {
             .foregroundStyle(OriginalTheme.cream)
             .tint(OriginalTheme.gold)
         }
-        .navigationTitle("Potions & snacks")
+        .navigationTitle("Log boosts")
     }
 
     private func artwork(_ type: BoostType) -> String {

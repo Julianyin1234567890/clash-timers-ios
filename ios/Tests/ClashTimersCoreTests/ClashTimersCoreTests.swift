@@ -279,12 +279,12 @@ final class ClashTimersCoreTests: XCTestCase {
     func testOriginalWidgetLabelsAndAssets() throws {
         var document = StoredDocument()
         document.state = try SyncLogic.apply(minimal(), to: AppState(), now: 100)
-        XCTAssertEqual(VillageLabels.boostText(.builderBite, document: document, now: 100), "Bite")
+        XCTAssertEqual(VillageLabels.boostText(.builderBite, document: document, now: 100), "Log")
         TimerActions.addBoost(.builderPotion, state: &document.state, settings: document.settings.boosts, now: 100)
         TimerActions.addBoost(.builderPotion, state: &document.state, settings: document.settings.boosts, now: 100)
         XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 100), "2h")
         XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 161), "1h 59m")
-        XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 7300), "+1")
+        XCTAssertEqual(VillageLabels.boostText(.builderPotion, document: document, now: 7300), "Log")
         XCTAssertEqual(VillageLabels.syncAge(timestamp: 100, now: 280), "synced 3m ago")
         for icon in ["1000011", "1000084", "28000007", "73000016", "builder_potion", "apprentice"] {
             XCTAssertNotNil(GameData.resourceBundle.url(forResource: icon, withExtension: "png"))

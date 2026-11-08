@@ -1,11 +1,11 @@
 import Foundation
 
-/// The Android widget's compact labels, including stacked boosts and helper status.
+/// Compact action labels, stacked boost durations and helper status.
 public enum VillageLabels {
     public static func boostText(_ type: BoostType, document: StoredDocument, now: Int) -> String {
         let windows = document.state.boosts.filter { $0.type == type }.sorted { $0.start < $1.start }
         guard let active = windows.first(where: { $0.start <= now && $0.end > now }) else {
-            return type == .builderBite ? "Bite" : "+1"
+            return "Log"
         }
         var end = active.end
         for window in windows where window.start <= end && window.end > end { end = window.end }

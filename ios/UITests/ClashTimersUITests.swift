@@ -26,6 +26,10 @@ final class ClashTimersUITests: XCTestCase {
         app.buttons["openBoosts"].tap()
         let record = app.buttons["record-builderPotion"]
         XCTAssertTrue(record.waitForExistence(timeout: 5))
+        let boostScreen = XCTAttachment(screenshot: app.screenshot())
+        boostScreen.name = "Boost logging screen"
+        boostScreen.lifetime = .keepAlways
+        add(boostScreen)
         record.tap()
         let undo = app.buttons["undo-builderPotion"]
         XCTAssertTrue(undo.isEnabled)
@@ -68,6 +72,10 @@ final class ClashTimersUITests: XCTestCase {
         app.buttons["syncVillage"].tap()
         let input = app.textViews["villageExportInput"]
         XCTAssertTrue(input.waitForExistence(timeout: 5))
+        let importScreen = XCTAttachment(screenshot: app.screenshot())
+        importScreen.name = "Saved village import screen"
+        importScreen.lifetime = .keepAlways
+        add(importScreen)
         input.tap()
         input.typeText("not village data")
         app.buttons["confirmImport"].tap()
