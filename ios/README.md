@@ -4,7 +4,7 @@ Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports
 
 ## Install from Windows
 
-**Version 1.0.2 restores the original visual design and interactive widget controls.** The artwork and font come from the Android sources. iOS chooses the fixed widget dimensions, so compact sizes show fewer rows. Choose the large widget and the Home Screen’s Light or Dark appearance for the original colour palette.
+**Version 1.0.3 keeps the original visual design and clarifies the import and boost controls.** The artwork and font come from the Android sources. iOS chooses the fixed widget dimensions, so compact sizes show fewer rows. Choose the large widget and the Home Screen’s Light or Dark appearance for the original colour palette. The potion and snack buttons log uses; they do not show your owned inventory.
 
 **For the app and Home Screen widget, choose `ClashTimers-AltStore.ipa` and install it with AltStore Classic.** Your Windows PC runs AltServer for installation and refresh. The iPhone runs the app and its timers.
 
@@ -70,7 +70,7 @@ The game export is a snapshot. Copy a new one after changing upgrades in-game. H
 
 ## Build with Xcode or run the tests
 
-On a Mac with Xcode 16 or later, open `ClashTimers.xcodeproj`. Select **ClashTimers** for the full app or **ClashTimersStandalone** for the app-only variant. Select an iPhone simulator and press **Run**. To install on a physical device, choose your team in Signing & Capabilities, set a unique `APP_BUNDLE_IDENTIFIER` in `Config/Versions.xcconfig`, and register the matching App Group for both full-build targets.
+On a Mac with Xcode 16.3 or later, open `ClashTimers.xcodeproj`. Select **ClashTimers** for the full app or **ClashTimersStandalone** for the app-only variant. Select an iPhone simulator and press **Run**. To install on a physical device, choose your team in Signing & Capabilities, set a unique `APP_BUNDLE_IDENTIFIER` in `Config/Versions.xcconfig`, and register the matching App Group for both full-build targets.
 
 From `ios/`:
 

@@ -10,6 +10,7 @@ struct BoostsView: View {
                 Section {
                     Text("Log a potion or Builder Bite after using it in Clash of Clans. These controls adjust your predicted finish times. The app does not know which items you own or how many you have.")
                         .foregroundStyle(OriginalTheme.cream)
+                        .listRowBackground(OriginalTheme.color(0x5A3F2B))
                 }
                 ForEach(BoostType.allCases) { type in
                     Section {
@@ -27,6 +28,7 @@ struct BoostsView: View {
                         HStack {
                             Button { model.addBoost(type) } label: {
                                 Label("Log one used in Clash", systemImage: "plus.circle.fill")
+                                    .foregroundStyle(OriginalTheme.ink)
                             }
                             .buttonStyle(.borderedProminent)
                             .disabled(model.document.state.exportJSON == nil)
