@@ -1,5 +1,7 @@
 # Clash Timers for iPhone and iPad
 
+An independently maintained iOS port of **[Kuswaa's Clash Timers](https://github.com/Kuswaa/clash-timers)**, originally created by **Kuswa Tul Kaabah**. Credit for the original Android app, widget design and timer logic belongs to the original author. The original MIT copyright and third-party notices are retained.
+
 Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports the same home-village export as the Android version and calculates timers offline. No Supercell login, API key, or backend is needed.
 
 ## Install from Windows
@@ -9,6 +11,8 @@ Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports
 **For the app and Home Screen widget, choose `ClashTimers-AltStore.ipa` and install it with AltStore Classic.** Your Windows PC runs AltServer for installation and refresh. The iPhone runs the app and its timers.
 
 ### 1. Get the iPhone build
+
+For an already built IPA, open the **[latest iOS release](https://github.com/Julianyin1234567890/clash-timers-ios/releases/latest)** and download **ClashTimers-AltStore.ipa**. The release also includes detailed Word and PDF installation guides. Then continue to step 2 below. The build instructions that follow are optional.
 
 In a GitHub repository containing **this iOS port**, open **Actions → Build iPhone app**. Open a successful run, download the **ClashTimers-iPhone** artifact, and extract the ZIP on Windows. A GitHub account is needed to download workflow artifacts. If you already have the IPA, skip to step 2.
 
