@@ -55,6 +55,11 @@ struct PlayerLevelsView: View {
             .confirmationDialog("Remove saved levels and stop automatic level refresh?", isPresented: $confirmingClear, titleVisibility: .visible) {
                 Button("Remove online profile", role: .destructive) { model.clearLevels() }
             }
+            .alert(model.alert?.title ?? "", isPresented: Binding(
+                get: { model.alert != nil }, set: { if !$0 { model.alert = nil } }
+            )) {
+                Button("OK") { model.alert = nil }
+            } message: { Text(model.alert?.message ?? "") }
         }
     }
 

@@ -5,7 +5,10 @@ struct BoostsView: View {
     let model: AppModel
     var body: some View {
         TimelineView(.periodic(from: .now, by: 1)) { context in
-            let now = Int(context.date.timeIntervalSince1970)
+            // A model change can redraw before TimelineView advances its date.
+            // Undo truncates the boost at wall-clock time, so use at least that
+            // time to disable Undo immediately after the saved boost is stopped.
+            let now = max(Int(context.date.timeIntervalSince1970), Int(Date().timeIntervalSince1970))
             List {
                 Section {
                     Text("Log a potion or Builder Bite after using it in Clash of Clans. These controls adjust your predicted finish times. The app does not know which items you own or how many you have.")

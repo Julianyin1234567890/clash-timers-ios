@@ -83,6 +83,8 @@ final class ClashTimersUITests: XCTestCase {
         let undo = app.buttons["undo-builderPotion"]
         XCTAssertTrue(undo.isEnabled)
         undo.tap()
+        expectation(for: NSPredicate(format: "enabled == false"), evaluatedWith: undo)
+        waitForExpectations(timeout: 5)
         XCTAssertFalse(undo.isEnabled)
 
         app.terminate()
