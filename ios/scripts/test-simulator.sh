@@ -22,7 +22,7 @@ python3 - "$device_id" <<'PY'
 import subprocess, sys
 subprocess.run(['xcrun', 'simctl', 'bootstatus', sys.argv[1], '-b'], check=True, timeout=300)
 PY
-test_args=()
+test_args=(-destination-timeout 180)
 if [[ -n "${UI_TEST_FILTER:-}" ]]; then
     IFS=',' read -r -a selected_tests <<< "$UI_TEST_FILTER"
     for selected_test in "${selected_tests[@]}"; do
