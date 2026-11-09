@@ -17,9 +17,25 @@ else:
     sys.exit("No iPhone simulator is installed for the selected Xcode. Install an iOS simulator runtime.")
 ')"
 result="$build_dir/Tests-$(date +%s).xcresult"
+# Report and bound simulator startup separately from test execution.
+python3 - "$device_id" <<'PY'
+import subprocess, sys
+subprocess.run(['xcrun', 'simctl', 'bootstatus', sys.argv[1], '-b'], check=True, timeout=300)
+PY
+test_args=()
+if [[ -n "${UI_TEST_FILTER:-}" ]]; then
+    IFS=',' read -r -a selected_tests <<< "$UI_TEST_FILTER"
+    for selected_test in "${selected_tests[@]}"; do
+        test_args+=("-only-testing:$selected_test")
+    done
+fi
+set +e
 xcodebuild test -project ClashTimers.xcodeproj -scheme ClashTimers -configuration Debug \
     -destination "id=$device_id" -derivedDataPath "$build_dir/DerivedData" \
     -resultBundlePath "$result" \
-    -parallel-testing-enabled NO -maximum-concurrent-test-simulator-destinations 1
+    -parallel-testing-enabled NO -maximum-concurrent-test-simulator-destinations 1 "${test_args[@]}"
+test_status=$?
+set -e
 
 xcrun xcresulttool export attachments --path "$result" --output-path "$build_dir/screenshots"
+exit "$test_status"

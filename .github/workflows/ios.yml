@@ -2,6 +2,12 @@ name: Build iPhone app
 
 on:
   workflow_dispatch:
+    inputs:
+      ui_test_filter:
+        description: 'Optional comma-separated Xcode test identifiers; leave empty for the full suite'
+        required: false
+        default: ''
+        type: string
   push:
     branches: [main, ios-support]
     paths: ['ios/**', '.github/workflows/ios.yml', 'app/src/main/assets/*.json', 'app/src/test/resources/fixtures/**']
@@ -41,6 +47,8 @@ jobs:
       - name: Build iPhone IPAs and verify AltStore widget entitlements
         run: bash ios/scripts/build-device.sh "$RUNNER_TEMP/ipas"
       - name: Test the app on an iPhone simulator
+        env:
+          UI_TEST_FILTER: ${{ inputs.ui_test_filter }}
         run: bash ios/scripts/test-simulator.sh "$RUNNER_TEMP/simulator"
       - name: Upload iPhone apps
         uses: actions/upload-artifact@v4
