@@ -2,7 +2,7 @@
 
 An independently maintained iOS port of **[Kuswaa's Clash Timers](https://github.com/Kuswaa/clash-timers)**, originally created by **Kuswa Tul Kaabah**. Credit for the original Android app, widget design and timer logic belongs to the original author. The original MIT copyright and third-party notices are retained.
 
-Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports the same home-village export as the Android version and calculates timers offline. No Supercell login, API key, or backend is needed.
+Requires **iOS or iPadOS 17 or newer**. This is a native SwiftUI app. It imports the same home-village export as the Android version and calculates timers offline. Optional online level refresh uses Clash of Stats. No Supercell login, API key, or user-hosted backend is needed.
 
 ## Install from Windows
 
@@ -62,7 +62,17 @@ If you have Apple development or ad hoc device profiles, the **Sign iPhone app w
 2. Add Actions secrets named `IOS_CERTIFICATE_P12`, `IOS_CERTIFICATE_PASSWORD`, `IOS_APP_PROFILE`, and `IOS_WIDGET_PROFILE`. The first, third, and fourth are the **base64 contents** of your `.p12` (certificate **and private key**) and two `.mobileprovision` files. The password is the `.p12` password. For example, from PowerShell in the private repo, `[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\signing\app.mobileprovision')) | gh secret set IOS_APP_PROFILE`. Do not commit signing files.
 3. Run **Actions → Sign iPhone app with widget → Run workflow**. Download the **ClashTimers-provisioned** artifact, extract the `.ipa`, and install it on a registered device using Sideloadly’s **Normal Install** mode, which preserves the existing signature.
 
-## First sync
+## Online level refresh (v1.0.5)
+
+Tap **Refresh levels online → Download & sync levels**. Enter your player tag the first time; it is prefilled from an existing export or previously downloaded profile. This downloads public hero, troop, spell, siege, pet and owned equipment levels directly on your iPhone. You do not need to open Clash or copy JSON for these requests. Later checks highlight level increases.
+
+Enable **Refresh when I open the app** to check automatically on opening after five minutes. Saved results remain readable offline, and an error preserves the last successful profile. The provider can return cached data; a successful check does not guarantee instant game freshness. Use **Remove saved online profile** to remove it and disable automatic checks.
+
+This sends the player tag to [Clash of Stats](https://www.clashofstats.com). The provider sees your public tag and connection information; the app sends no export or login credentials. See [online data details](../docs/ONLINE-LEVELS.md).
+
+**Building countdowns and potion/snack stock are not available through this lookup.** Online refresh leaves your exported timers unchanged. Use the following copy-and-Sync workflow when you want to update those countdowns.
+
+## First timer sync
 
 1. In Clash of Clans, choose **Settings → More Settings → Data Export → Copy**.
 2. Tap **Sync** on the widget, or **Sync copied village** / the gold **Sync** button in Clash Timers. The widget opens the app, which reads the clipboard once and saves immediately. Choose **Allow Paste** if iOS asks. Look for **Village synced. Your timers are saved.** There is no separate Paste or Import step on this path. If paste is blocked or the copy is missing, a recovery screen opens; its system **Paste** button also saves immediately. **Paste village data manually** remains available for text entry. The app only accepts a complete village export. An invalid or older export for the same tag leaves your saved timers intact. Simply reopening the app does not read the clipboard or need another export.

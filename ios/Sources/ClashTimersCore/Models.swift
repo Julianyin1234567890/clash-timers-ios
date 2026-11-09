@@ -178,6 +178,7 @@ public struct AppSettings: Codable, Equatable, Sendable {
     public var totalBuildersOverride: Int?
     public var boosts = BoostSettings()
     public var notificationsEnabled = false
+    public var refreshLevelsOnOpen: Bool?
     public init() {}
     public var displayName: String {
         let name = playerName.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -193,6 +194,7 @@ public struct StoredDocument: Codable, Equatable, Sendable {
     public var version = 1
     public var state = AppState()
     public var settings = AppSettings()
+    public var playerProfile: PlayerProfile?
     public init() {}
 }
 

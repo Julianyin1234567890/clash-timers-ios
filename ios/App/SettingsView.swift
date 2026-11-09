@@ -64,7 +64,8 @@ struct SettingsView: View {
 
                 Section("About") {
                     LabeledContent("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—")
-                    Text("Works offline. Village data stays on this device; iOS may include it in your personal backup. No analytics, ads, or background clipboard access.")
+                    Text("Timer snapshots work offline and stay on this device; iOS may include them in your personal backup. Optional online level refresh sends your public player tag to Clash of Stats. No Supercell login, analytics, ads, or background clipboard access.")
+                    Link("Online level provider: Clash of Stats", destination: URL(string: "https://www.clashofstats.com")!)
                     Text("Unofficial fan project. Not endorsed by Supercell. Clash of Clans names and game data belong to Supercell.")
                         .font(.footnote).foregroundStyle(.secondary)
                     Link("Original project & source", destination: URL(string: "https://github.com/Kuswaa/clash-timers")!)

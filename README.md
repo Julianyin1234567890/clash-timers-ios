@@ -10,7 +10,7 @@ Track your home-village builders, laboratory research and pets from an iPhone Ho
 
 ## Download and install
 
-**Current release: [v1.0.4 — Copy then Sync](https://github.com/Julianyin1234567890/clash-timers-ios/releases/tag/ios-v1.0.4).** Download **ClashTimers-AltStore.ipa** from the release assets.
+**Current release: [v1.0.5 — Online level refresh](https://github.com/Julianyin1234567890/clash-timers-ios/releases/tag/ios-v1.0.5).** Download **ClashTimers-AltStore.ipa** from the release assets.
 
 - [Detailed Word installation guide](https://github.com/Julianyin1234567890/clash-timers-ios/releases/latest/download/Clash-Timers-AltStore-Guide.docx)
 - [Detailed PDF installation guide](https://github.com/Julianyin1234567890/clash-timers-ios/releases/latest/download/Clash-Timers-AltStore-Guide.pdf)
@@ -27,30 +27,46 @@ Requires **iOS/iPadOS 17 or newer**. Install through **AltStore Classic** and ch
 
 Actual simulator captures with example village data. Small and medium widgets show fewer rows to fit Apple's widget sizes.
 
-## Copy in Clash, then Sync
+## Download levels without copying an export
+
+1. Tap **Refresh levels online** in Clash Timers.
+2. Enter your public **player tag** once (the `#…` on your Clash profile), then tap **Download & sync levels**.
+3. View reported hero, troop, spell, siege machine, pet and owned hero-equipment levels. The next check highlights increases compared with the previous successful check.
+4. Optionally enable **Refresh when I open the app**. After at least five minutes, reopening the app checks again. It does not poll continuously while closed.
+
+This optional feature uses the public [Clash of Stats](https://www.clashofstats.com) player lookup from your iPhone. No API key, Supercell login, PC relay or repeated JSON export is needed. The provider may return cached data. The displayed time is the time of the successful request, not a guarantee of the data's age. Building levels, active upgrade countdowns, and potion/snack inventory are not supplied by this lookup.
+
+Your saved online profile survives relaunches and failed requests. It is kept separate from the timer export, so refreshing levels never changes your widget countdowns. If you choose a different player tag, the online profile switches only after a successful download. Remove it from the levels screen to stop automatic refresh and delete the local profile.
+
+## Copy in Clash, then Sync countdowns
 
 1. In Clash of Clans, open **Settings → More Settings → Data Export → Copy**.
 2. Tap **Sync** on the medium or large widget. On the small widget, tap anywhere. You can also tap Sync inside the app.
 3. Clash Timers opens and saves the copied village immediately. Choose **Allow Paste** if iOS asks, then swipe Home to return to the widget.
 
-There is no separate Paste or Import confirmation on this path. Saved countdowns keep running between syncs. **Copy fresh data after starting new upgrades or changing their finish times in the game.** This is an offline snapshot tracker; it does not sign into Supercell ID or automatically fetch later game changes.
+There is no separate Paste or Import confirmation on this path. Saved countdowns keep running between syncs. **Copy fresh data after starting new upgrades or changing their finish times in the game.** Countdowns use an offline snapshot; online level refresh does not discover newly started building upgrades.
 
 ## Features and practical limits
 
 - Small, medium and large Home Screen widgets for builder, laboratory and pet timers.
 - Potion and Builder Bite logging, undo controls, and helper links. **Log** records an item you used in Clash; it does not show your owned inventory.
 - Local finish notifications. Tapping a notification opens Clash Timers.
-- Saved village data on your device, with no account, ads, analytics or network requests for timer syncing. Clipboard reads happen only after a Sync or paste action.
+- Offline timer snapshots plus optional online level refresh. No account, ads or analytics. Clipboard reads happen only after a Sync or paste action.
 - Helper predictions assume you activate future helper sessions. A fresh export corrects the saved snapshot.
 - iOS controls widget redraw timing. Sync opens the app; it does not silently close back to the Home Screen as the original Android activity does.
 
-The v1.0.4 Mac build passed **25 core tests and eight simulator checks**, covering clipboard sync, widget URL launches, persistence, invalid/stale data, boost controls and widget renders. Physical-device signing and widget behavior can vary. [Build and test results](https://github.com/Julianyin1234567890/clash-timers-ios/actions/runs/42519290076).
+## Privacy and online service
+
+Timer exports stay on your device (and may be included in your personal iOS backup). Choosing online refresh sends the requested public player tag to `api.clashofstats.com` over HTTPS; that service also sees normal connection information such as your IP address. No village export, Supercell credentials or Apple credentials are sent. Requests begin only after you choose Download, or on app opening if you enabled that option. The widget does not make network requests. This is an independent integration with a third-party public service, not an official API partnership; availability and response formats may change.
+
+[Build and test results](https://github.com/Julianyin1234567890/clash-timers-ios/actions/workflows/ios.yml).
 
 ## Original project and credits
 
 - **Original author:** [Kuswaa / Kuswa Tul Kaabah](https://github.com/Kuswaa). [Original Clash Timers repository](https://github.com/Kuswaa/clash-timers).
 - **Android version:** get its releases and updates from the original repository. The [Android documentation](docs/ANDROID.md) is retained here for reference.
 - **Game artwork, names and data:** Supercell, with data/assets sourced by the original project from [clash-of-clans-data](https://github.com/chiefpansancolt/clash-of-clans-data), credited to Christopher Pezza.
+- **Online player levels:** [Clash of Stats](https://www.clashofstats.com). Provider-specific IDs are mapped separately from game-export IDs. See [mapping provenance](docs/ONLINE-LEVELS.md).
 - **Font:** Lilita One by Juan Montoreano, under the SIL Open Font License.
 
 The original copyright and [MIT code license](LICENSE) are retained. Game assets and the font have separate terms; see [NOTICE](NOTICE) and the [iOS resource notices](ios/Sources/ClashTimersCore/Resources/NOTICE). The iOS port was developed with AI assistance.

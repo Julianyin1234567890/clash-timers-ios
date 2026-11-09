@@ -22,6 +22,54 @@ final class ClashTimersUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Cannon"].firstMatch.waitForExistence(timeout: 5))
     }
 
+    func testOnlineLevelsWithoutExportPersistAndSurviveFailure() {
+        let fixture = """
+        {"tag":"#P0Y8LQ","name":"Sample Village","townHallLevel":16,
+         "heroes":[{"id":0,"level":8,"maxLevel":105,"village":"home"}],
+         "troops":[],"spells":[],"heroEquipment":[]}
+        """
+        app.terminate()
+        app.launchEnvironment["CLASH_PROFILE_RESPONSE"] = fixture
+        app.launch()
+        app.buttons["openLevels"].tap()
+        let tag = app.textFields["onlinePlayerTag"]
+        XCTAssertTrue(tag.waitForExistence(timeout: 5))
+        tag.tap()
+        tag.typeText("#P0Y8LQ")
+        app.buttons["downloadLevels"].tap()
+        XCTAssertTrue(app.staticTexts["onlineProfileName"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["levelsChanges"].label.contains("Starting levels saved"))
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Online level refresh"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        app.buttons["Done"].tap()
+        // No export or clipboard interaction was necessary to download levels.
+        XCTAssertTrue(app.buttons["startSync"].exists)
+
+        app.terminate()
+        app.launchArguments = ["--uitesting", "--keep-state"]
+        app.launchEnvironment["CLASH_PROFILE_RESPONSE"] = fixture.replacingOccurrences(of: "\"level\":8", with: "\"level\":9")
+        app.launch()
+        app.buttons["openLevels"].tap()
+        XCTAssertEqual(app.textFields["onlinePlayerTag"].value as? String, "#P0Y8LQ")
+        app.buttons["downloadLevels"].tap()
+        let changes = app.staticTexts["levelsChanges"]
+        let upgraded = NSPredicate(format: "label CONTAINS %@", "1 level increase")
+        expectation(for: upgraded, evaluatedWith: changes)
+        waitForExpectations(timeout: 5)
+
+        app.terminate()
+        app.launchEnvironment.removeValue(forKey: "CLASH_PROFILE_RESPONSE")
+        app.launch()
+        app.buttons["openLevels"].tap()
+        app.buttons["downloadLevels"].tap()
+        XCTAssertTrue(app.staticTexts["levelsError"].waitForExistence(timeout: 5)
+                      || app.otherElements["levelsError"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["onlineProfileName"].exists)
+        XCTAssertTrue(app.staticTexts["levelsChanges"].label.contains("1 level increase"))
+    }
+
     func testImportBoostUndoAndPersistence() {
         importVillage()
         app.buttons["openBoosts"].tap()

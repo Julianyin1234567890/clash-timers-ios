@@ -2,7 +2,7 @@ import SwiftUI
 import ClashTimersCore
 
 private enum AppSheet: String, Identifiable {
-    case importVillage, settings
+    case importVillage, settings, levels
     var id: String { rawValue }
 }
 
@@ -18,6 +18,19 @@ struct DashboardView: View {
             ScrollView {
                 TimelineView(.periodic(from: .now, by: 1)) { context in
                     VStack(spacing: 14) {
+                        Button { sheet = .levels } label: {
+                            Label("Refresh levels online", systemImage: "arrow.down.circle.fill")
+                                .font(OriginalTheme.font(18)).foregroundStyle(OriginalTheme.ink)
+                                .padding(.horizontal, 20).padding(.vertical, 12)
+                                .frame(maxWidth: .infinity)
+                                .background(OriginalTheme.goldButton, in: RoundedRectangle(cornerRadius: 10))
+                        }
+                        .buttonStyle(OriginalButtonStyle()).disabled(!model.isReady)
+                        .accessibilityIdentifier("openLevels")
+                        if let profile = model.document.playerProfile {
+                            Text("\(profile.name) · TH \(profile.townHallLevel) · \(profile.levels.count) saved levels")
+                                .font(.caption).foregroundStyle(OriginalTheme.cream)
+                        }
                         VillagePanel(document: model.document, date: context.date,
                                      error: model.storageError, handler: handle)
                         if let status = model.syncStatus {
@@ -35,7 +48,7 @@ struct DashboardView: View {
                                 .accessibilityIdentifier("startSync")
                         } else if let village = model.document.state.village {
                             Text(village.tag).font(.footnote).foregroundStyle(OriginalTheme.cream)
-                            Text("Village saved on this iPhone. Copy new data in Clash, then tap Sync to update it.")
+                            Text("Timer snapshot saved on this iPhone. Copy new data in Clash, then tap Sync to update countdowns. Use Refresh levels online for public upgrade levels.")
                                 .font(.caption).foregroundStyle(OriginalTheme.cream)
                                 .multilineTextAlignment(.center)
                             Button("Log a potion or snack") { showBoosts = true }
@@ -76,6 +89,7 @@ struct DashboardView: View {
                 switch destination {
                 case .importVillage: ImportVillageView(model: model)
                 case .settings: SettingsView(model: model)
+                case .levels: PlayerLevelsView(model: model)
                 }
             }
             .alert(model.alert?.title ?? "", isPresented: Binding(
@@ -90,6 +104,9 @@ struct DashboardView: View {
                     completeRequestedSync()
                 }
             }
+            .task(id: scenePhase) {
+                if scenePhase == .active { await model.refreshLevelsIfNeeded() }
+            }
             .onReceive(NotificationCenter.default.publisher(for: .villageDidChange)) { _ in model.refresh() }
             .onOpenURL { url in
                 guard url.scheme == "clashtimers" else { return }
@@ -97,6 +114,7 @@ struct DashboardView: View {
                 case "sync": requestSync()
                 case "boosts": showBoosts = true
                 case "settings": sheet = .settings
+                case "levels": sheet = .levels
                 default: break
                 }
             }

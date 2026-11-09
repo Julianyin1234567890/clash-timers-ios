@@ -26,6 +26,10 @@
 			isa = PBXBuildFile;
 			fileRef = 624272E17402B3B9BA018E4B /* ImportVillageView.swift */;
 		};
+		A10500000000000000000002 /* PlayerLevelsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A10500000000000000000001 /* PlayerLevelsView.swift */;
+		};
 		3A3C26DFF80A6389EA485C6B /* SharedStore.swift in Sources */ = {
 			isa = PBXBuildFile;
 			fileRef = BAD126635A18BE477C18DA58 /* SharedStore.swift */;
@@ -81,6 +85,10 @@
 		BE0E6931DFD03B318BBD044C /* ImportVillageView.swift in Sources */ = {
 			isa = PBXBuildFile;
 			fileRef = 624272E17402B3B9BA018E4B /* ImportVillageView.swift */;
+		};
+		A10500000000000000000003 /* PlayerLevelsView.swift in Sources */ = {
+			isa = PBXBuildFile;
+			fileRef = A10500000000000000000001 /* PlayerLevelsView.swift */;
 		};
 		C981E8E3B6F62BD14FFEE824 /* AppModel.swift in Sources */ = {
 			isa = PBXBuildFile;
@@ -309,6 +317,12 @@
 			path = ImportVillageView.swift;
 			sourceTree = "<group>";
 		};
+		A10500000000000000000001 /* PlayerLevelsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PlayerLevelsView.swift;
+			sourceTree = "<group>";
+		};
 		64B7E73BFF46806C5FF256FC /* ClashTimersStandalone.app */ = {
 			isa = PBXFileReference;
 			explicitFileType = wrapper.application;
@@ -473,6 +487,7 @@
 				B89EAE5BD3E9A1144D40DD76 /* ClashTimersApp.swift */,
 				2AB269010E1A96444656DF3C /* DashboardView.swift */,
 				624272E17402B3B9BA018E4B /* ImportVillageView.swift */,
+				A10500000000000000000001 /* PlayerLevelsView.swift */,
 				6D2108032E13C5A134CF94BC /* Info.plist */,
 				7203E2F98F0E2C82F0DC039E /* NotificationScheduler.swift */,
 				44E827308F537BCFA35D4F9D /* SettingsView.swift */,
@@ -752,6 +767,7 @@
 				EC7A60A05C0EDDFCB90065E6 /* ClashTimersApp.swift in Sources */,
 				B4587F25AE26E43F876D631D /* DashboardView.swift in Sources */,
 				BE0E6931DFD03B318BBD044C /* ImportVillageView.swift in Sources */,
+				A10500000000000000000003 /* PlayerLevelsView.swift in Sources */,
 				A7A458CD78617BC5B723FB1A /* NotificationScheduler.swift in Sources */,
 				9F9A26CEFB02C31CACA38DF7 /* SettingsView.swift in Sources */,
 				51038F704B1AFA54902FC2B7 /* TimerRowView.swift in Sources */,
@@ -771,6 +787,7 @@
 				D9F4054EE1662E943BA464FE /* ClashTimersApp.swift in Sources */,
 				4126CBDAE2EFDACAA729EC25 /* DashboardView.swift in Sources */,
 				2CC14FF002483BD5592D3065 /* ImportVillageView.swift in Sources */,
+				A10500000000000000000002 /* PlayerLevelsView.swift in Sources */,
 				701C4BF882B7F4C3FF093166 /* NotificationScheduler.swift in Sources */,
 				EAAF31061C1B8950B0048526 /* SettingsView.swift in Sources */,
 				E3E34EFF0ADD4477510014C1 /* TimerRowView.swift in Sources */,

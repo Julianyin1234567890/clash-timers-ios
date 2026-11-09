@@ -17,10 +17,14 @@ final class AppModel {
     private(set) var isReady = false
     private(set) var storageError: String?
     private(set) var syncStatus: String?
+    private(set) var isRefreshingLevels = false
+    private(set) var levelsError: String?
     var alert: AppAlert?
 
     @ObservationIgnored private var store: DocumentStore?
     @ObservationIgnored private let notifications = NotificationScheduler()
+    @ObservationIgnored private let profileClient = PlayerProfileClient()
+    @ObservationIgnored private var lastAutomaticAttempt: Date?
     @ObservationIgnored private let isTesting = ProcessInfo.processInfo.arguments.contains("--uitesting")
 
     init() {
@@ -107,6 +111,55 @@ final class AppModel {
     func clearVillage() {
         syncStatus = nil
         change { $0.state = AppState() }
+    }
+
+    func refreshLevels(tag: String) async {
+        guard isReady, !isRefreshingLevels else { return }
+        isRefreshingLevels = true
+        levelsError = nil
+        defer { isRefreshingLevels = false }
+        do {
+            let profile: PlayerProfile
+            if isTesting {
+                // UI tests never contact a real player service.
+                guard let fixture = ProcessInfo.processInfo.environment["CLASH_PROFILE_RESPONSE"] else {
+                    throw PlayerProfileError.unavailable(503)
+                }
+                profile = try PlayerProfileDecoder.decode(Data(fixture.utf8), expectedTag: tag)
+            } else {
+                profile = try await profileClient.fetch(tag: tag)
+            }
+            try Task.checkCancellation()
+            try commit { $0.playerProfile = profile.comparing(to: $0.playerProfile) }
+        } catch is CancellationError {
+            // Closing the screen cancels its request without replacing saved data.
+        } catch let error as URLError where error.code == .cancelled {
+        } catch {
+            levelsError = error.localizedDescription
+        }
+    }
+
+    func setRefreshLevelsOnOpen(_ enabled: Bool) {
+        change { $0.settings.refreshLevelsOnOpen = enabled }
+    }
+
+    func refreshLevelsIfNeeded() async {
+        guard document.settings.refreshLevelsOnOpen == true,
+              let profile = document.playerProfile, !isRefreshingLevels else { return }
+        let now = Date()
+        guard now.timeIntervalSince(profile.checkedAt) >= 300,
+              lastAutomaticAttempt.map({ now.timeIntervalSince($0) >= 300 }) ?? true else { return }
+        lastAutomaticAttempt = now
+        await refreshLevels(tag: profile.tag)
+    }
+
+    func clearLevels() {
+        guard !isRefreshingLevels else { return }
+        levelsError = nil
+        change {
+            $0.playerProfile = nil
+            $0.settings.refreshLevelsOnOpen = false
+        }
     }
 
     private func change(_ edit: (inout StoredDocument) -> Void) {
